@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login | Kristen’s Glam Hub</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Edu+AU+VIC+WA+NT+Arrows:wght@400..700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #ffe4ef, #ffd6e8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    .box {
+      width: 360px;
+      background: #ffffff;
+      padding: 35px;
+      border-radius: 14px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+      text-align: center;
+    }
+
+    h1 {
+      font-family: "Edu AU VIC WA NT Arrows", cursive;
+      font-size: 42px;
+      margin-bottom: 10px;
+      -webkit-text-stroke: 1px #d63384;
+      color: transparent;
+    }
+
+    input {
+      width: 90%;
+      margin: 10px 0;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #d63384;
+      color: white;
+      border: none;
+      font-size: 17px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background: #b1256b;
+    }
+
+    .hidden { display: none; }
+
+    .msg {
+      margin-top: 10px;
+      font-size: 14px;
+      color: green;
+    }
+
+    .error {
+      color: red;
+      font-size: 14px;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="box">
+  <h1>Login</h1>
+
+  <!-- STEP 1: EMAIL + PASSWORD -->
+  <form id="loginForm">
+    <input type="email" name="email" placeholder="Email" required />
+    <input type="password" name="password" placeholder="Password" required />
+    <button type="submit">Send OTP</button>
+  </form>
+
+  <!-- STEP 2: OTP -->
+  <form id="otpForm" class="hidden">
+    <input type="text" name="otp" placeholder="Enter OTP" required />
+    <button type="submit">Verify OTP</button>
+  </form>
+
+  <div id="message" class="msg"></div>
+  <div id="error" class="error"></div>
+
+</div>
+
+<script>
+  const loginForm = document.getElementById("loginForm");
+  const otpForm = document.getElementById("otpForm");
+  const msg = document.getElementById("message");
+  const error = document.getElementById("error");
+
+  loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    error.innerText = "";
+
+    const res = await fetch("/send-login-otp", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: loginForm.email.value,
+        password: loginForm.password.value
+      })
+    });
+
+    const data = await res.json();
+
+    if (!data.success) {
+      error.innerText = data.message;
+      return;
+    }
+
+    loginForm.classList.add("hidden");
+    otpForm.classList.remove("hidden");
+    msg.innerText = "OTP sent to your email";
+  });
+
+  otpForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    error.innerText = "";
+
+    const res = await fetch("/verify-login-otp", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ otp: otpForm.otp.value })
+    });
+
+    const data = await res.json();
+
+    if (!data.success) {
+      error.innerText = data.message;
+      return;
+    }
+
+    msg.innerText = "Email Verification Successful";
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 1200);
+  });
+</script>
+
+</body>
+</html>

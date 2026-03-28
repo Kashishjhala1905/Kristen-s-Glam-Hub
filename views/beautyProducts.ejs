@@ -1,282 +1,284 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Beauty Products</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Arrows:wght@400..700&display=swap"
-    rel="stylesheet"
-  />
-  <style>
-    body {
-      font-family: 'Roboto', sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #fff0f5;
-    }
+    <meta charset="UTF-8">
+    <title>Beauty Products | Kristen’s Glam Hub</title>
 
-    .products-section {
-      padding: 50px 20px;
-    }
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Roboto:wght@400;500&family=Edu+AU+VIC+WA+NT+Arrows:wght@400..700&display=swap" rel="stylesheet">
 
-    .products-section h2 {
-      text-align: center;
-      font-family: "Edu AU VIC WA NT Arrows", cursive;
-      font-size: 36px;
-      color: #d63384;
-      position: relative;
-    }
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #fff8f5;
+            font-family: 'Roboto', sans-serif;
+        }
 
-    .products-section h2::after {
-      content: "";
-      display: block;
-      width: 100px;
-      height: 4px;
-      background-color: #f8c8dc;
-      margin: 10px auto;
-      border-radius: 2px;
-    }
+        /* 🌸 NAVBAR (SAME AS SERVICES.EJS) */
+        nav {
+            background-color: #ffffff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 40px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-    .category {
-      margin-top: 40px;
-    }
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+            margin: 0;
+            padding: 0;
+        }
 
-    .category h3 {
-      font-size: 28px;
-      color: #c2185b;
-      margin-bottom: 20px;
-      text-align: center;
-    }
+        nav ul li a, .login {
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
 
-    .products {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-    }
+        nav ul li a:hover, .login:hover {
+            color: #d63384;
+        }
 
-    .product {
-      background-color: white;
-      width: 220px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      overflow: hidden;
-      text-align: center;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-    }
+        /* 🌸 HEADER (EXACTLY SAME AS SERVICES.EJS) */
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(to right, #f3d1dc, #ffe0f0);
+        }
 
-    .product:hover {
-      transform: scale(1.05);
-    }
+        header h1 {
+            font-family: "Edu AU VIC WA NT Arrows", cursive;
+            font-size: 48px;
+            margin: 0;
+            color: #5a2a55;
+        }
 
-    .product img {
-      width: 100%;
-      height: 150px;
-      object-fit: cover;
-    }
+        /* CATEGORY */
+        .category {
+            margin: 50px auto;
+            max-width: 1200px;
+            padding: 0 20px;
+        }
 
-    .product-details {
-      padding: 15px;
-    }
+        .category h2 {
+            color: #d63384;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.3rem;
+            text-align: center;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
 
-    .product-details h4 {
-      margin: 10px 0 5px;
-      color: #333;
-    }
+        /* PRODUCT GRID */
+        .product-list {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
 
-    .product-details p {
-      margin: 5px 0;
-      color: #666;
-    }
+        .product-card {
+            background-color: white;
+            width: 250px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.10);
+            overflow: hidden;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
 
-    footer {
-      text-align: center;
-      padding: 30px 20px;
-      background-color: #ffe4ec;
-      margin-top: 50px;
-    }
+        .product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 8px 18px rgba(0,0,0,0.20);
+        }
 
-    .home-link {
-      display: inline-block;
-      margin-top: 15px;
-      padding: 10px 20px;
-      background-color: #d63384;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-      transition: background-color 0.3s;
-    }
+        .product-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
 
-    .home-link:hover {
-      background-color: #c2185b;
-    }
-  </style>
+        .product-info {
+            padding: 15px;
+        }
+
+        .product-info h3 {
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .product-info p {
+            font-size: 0.95rem;
+            color: #777;
+            margin-bottom: 10px;
+        }
+
+        .product-info button {
+            background-color: #d63384;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .product-info button:hover {
+            background-color: #b1256b;
+        }
+
+        /* EXPLORE BUTTON */
+        .explore-btn {
+            display: block;
+            margin: 25px auto;
+            background-color: #ffd6e8;
+            color: #d63384;
+            border: 2px solid #d63384;
+            border-radius: 8px;
+            padding: 10px 25px;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 1rem;
+            width: fit-content;
+            transition: 0.3s ease;
+        }
+
+        .explore-btn:hover {
+            background-color: #d63384;
+            color: #fff;
+            transform: scale(1.06);
+        }
+
+        /* SEPARATOR */
+        .separator {
+            margin: 50px auto;
+            width: 80%;
+            height: 2px;
+            background-color: #f3b7d1;
+            opacity: 0.5;
+        }
+
+        /* TOAST POPUP */
+        #toast {
+            visibility: hidden;
+            min-width: 260px;
+            max-width: calc(100% - 40px);
+            background-color: #d63384;
+            color: #fff;
+            text-align: center;
+            border-radius: 10px;
+            padding: 12px 16px;
+            position: fixed;
+            z-index: 1200;
+            left: 50%;
+            bottom: 28px;
+            transform: translateX(-50%) translateY(10px);
+            font-weight: 500;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            opacity: 0;
+            transition: opacity 0.25s ease, transform 0.25s ease;
+        }
+    </style>
 </head>
+
 <body>
-  <section class="products-section">
-    <h2>Our Beauty Products</h2>
 
-    <div class="category">
-      <h3>Skin Care</h3>
-      <div class="products">
-        <div class="product">
-          <img src="images/facewash.jpg" alt="Facewash">
-          <div class="product-details">
-            <h4>Gentle Face Wash</h4>
-            <p>From ₹299</p>
-            <p>20% off on combos</p>
-          </div>
-        </div>
-        <div class="product">
-            <img src="images/faceserum.jpg" alt="Faceserum">
-            <div class="product-details">
-              <h4>Gentle Face Serum</h4>
-              <p>From ₹299</p>
-              <p>20% off on combos</p>
-            </div>
-          </div>
-        <div class="product">
-          <img src="images/daycream.jpg" alt="Repairing cream">
-          <div class="product-details">
-            <h4>Day Repairing Cream</h4>
-            <p>From ₹499</p>
-            <p>Buy 2 Get 1 Free</p>
-          </div>
-        </div>
-        <div class="product">
-          <img src="images/suncreen.jpg" alt="Sunscreen">
-          <div class="product-details">
-            <h4>SPF 50+ Sunscreen</h4>
-            <p>From ₹599</p>
-            <p>Flat 15% off</p>
-          </div>
-        </div>
-      </div>
+    <!-- 🌸 NAVBAR -->
+    <nav>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/booknow">Book Now</a></li>
+        <li><a href="/services">Services</a></li>
+        <li><a href="/beautyproducts">Beauty Products</a></li>
+        <li><a href="/contact">Contact</a></li>
+    </ul>
+
+    <div class="nav-right">
+        <% if (!user) { %>
+            <a class="login" href="/login" class="nav-btn">Login</a> / 
+            <a class="login" href="/signup" class="nav-btn">Sign Up</a>
+        <% } else { %>
+            <a class="login" href="/profile" class="nav-btn">My Profile</a> 
+        <% } %>
     </div>
+</nav>
 
-    <div class="category">
-      <h3>Hair Care</h3>
-      <div class="products">
-        <div class="product">
-          <img src="images/shampoo.jpg" alt="Shampoo">
-          <div class="product-details">
-            <h4>Herbal Shampoo</h4>
-            <p>From ₹799</p>
-            <p>Combo includes conditioner</p>
-          </div>
-        </div>
-        <div class="product">
-            <img src="images/antidandruff.jpg" alt="Anti Dandruff">
-            <div class="product-details">
-              <h4>Anti-Dandruff Spray</h4>
-              <p>From ₹249</p>
-              <p>20% off on combos</p>
-            </div>
-          </div>
-        <div class="product">
-          <img src="images/hairserum.jpg" alt="Hair Serum">
-          <div class="product-details">
-            <h4>Hair Serum</h4>
-            <p>From ₹349</p>
-            <p>10% off on subscription</p>
-          </div>
-        </div>
-        <div class="product">
-          <img src="images/argonoil.webp" alt="Hair Oil">
-          <div class="product-details">
-            <h4>Argan Hair Oil</h4>
-            <p>From ₹499</p>
-            <p>Buy 1 Get 1 Free</p>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <div class="category">
-      <h3>Nail Art</h3>
-      <div class="products">
-        <div class="product">
-          <img src="images/nailpolish.jpg" alt="Nail Polish">
-          <div class="product-details">
-            <h4>Glossy Nail Polish</h4>
-            <p>From ₹299</p>
-            <p>3 for ₹799</p>
-          </div>
-        </div>
-        <div class="product">
-            <img src="images/manicure.webp" alt="Manicure">
-            <div class="product-details">
-              <h4>Menicure Kit</h4>
-              <p>From ₹899</p>
-              <p>20% off on combos</p>
-            </div>
-          </div>
-        <div class="product">
-          <img src="images/nailart.jpg" alt="Nail Kit">
-          <div class="product-details">
-            <h4>Nail Art Kit</h4>
-            <p>From ₹649</p>
-            <p>Free Brush Set</p>
-          </div>
-        </div>
-        <div class="product">
-          <img src="images/nailstickers.jpeg" alt="Nail Stickers">
-          <div class="product-details">
-            <h4>Nail Stickers</h4>
-            <p>From ₹199</p>
-            <p>Flat 10% off</p>
-          </div>
-        </div>
-      </div>
-    </div>
+    <!-- 🌸 HEADER (Same as Services) -->
+    <header>
+        <h1>Our Beauty Essentials</h1>
+    </header>
 
-    <div class="category">
-        <h3>Make Up</h3>
-        <div class="products">
-          <div class="product">
-            <img src="images/foundation.jpg" alt="Foundation">
-            <div class="product-details">
-              <h4>Foundation</h4>
-              <p>From  ₹799</p>
-              <p>3 for ₹1399</p>
-            </div>
-          </div>
-          <div class="product">
-              <img src="images/mascara.webp" alt="Mascara">
-              <div class="product-details">
-                <h4>Mascara</h4>
-                <p>From ₹249</p>
-                <p>Buy 2 get 1 free</p>
-              </div>
-            </div>
-          <div class="product">
-            <img src="images/lipstick.webp" alt="Lipstick">
-            <div class="product-details">
-              <h4>Lipsticks</h4>
-              <p>From ₹279</p>
-              <p>Free set of Lip Balm</p>
-            </div>
-          </div>
-          <div class="product">
-            <img src="images/blush.webp" alt="Blush Palatte">
-            <div class="product-details">
-              <h4>Blush Palatte</h4>
-              <p>From ₹599</p>
-              <p>Flat 10% off</p>
-            </div>
-          </div>
-        </div>
-      </div>
-  </section>
+    <% const sections = ["skin", "hair", "nail", "makeup"]; %>
 
-  <footer>
-    <p>Discover your true beauty with our curated products designed just for you 💖</p>
-    <a class="home-link" href="/">Return to Home</a>
-  </footer>
+    <% sections.forEach(section => { %>
+    <section class="category">
+
+        <h2><%= section.charAt(0).toUpperCase() + section.slice(1) %> Care</h2>
+
+        <div class="product-list">
+            <% categories[section].forEach(product => { %>
+
+            <div class="product-card">
+                <img src="<%= product.image_url %>" alt="<%= product.product_name %>"
+                     onerror="this.src='/images/placeholder.jpg'">
+
+                <div class="product-info">
+                    <h3><%= product.product_name %></h3>
+                    <p><%= product.price %></p>
+
+                    <button onclick="addToCart('<%= product.product_name %>','<%= product.price %>','<%= product.image_url %>')">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <% }) %>
+        </div>
+
+        <a href="/explore/<%= section %>" class="explore-btn">Explore More</a>
+
+    </section>
+
+    <div class="separator"></div>
+    <% }) %>
+
+    <div id="toast">Added to cart!</div>
+
+<script>
+    function showToast(message) {
+        const t = document.getElementById("toast");
+        t.textContent = message;
+        t.style.visibility = "visible";
+        t.style.opacity = "1";
+        t.style.transform = "translateX(-50%) translateY(0)";
+
+        setTimeout(() => {
+            t.style.opacity = "0";
+            t.style.transform = "translateX(-50%) translateY(10px)";
+            setTimeout(() => t.style.visibility = "hidden", 300);
+        }, 2000);
+    }
+
+    function addToCart(name, price, image) {
+        fetch("/cart/add", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, price, image })
+        })
+        .then(res => res.json())
+        .then(() => showToast(`"${name}" added to cart 💖`));
+    }
+</script>
+
 </body>
 </html>

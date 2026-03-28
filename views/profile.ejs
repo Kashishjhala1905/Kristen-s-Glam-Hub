@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>My Profile - Kristen's Glam Hub</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Playfair+Display&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Arrows:wght@400..700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Roboto, Arial;
+      background: #fff8f5;
+    }
+
+    header {
+      background: linear-gradient(90deg, #f3d1dc, #ffe0f0);
+      padding: 22px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-family: "Edu AU VIC WA NT Arrows", cursive;
+      font-size: 56px;
+      font-weight: 500;
+      color: transparent;
+      -webkit-text-stroke: 1.3px #5a2a55;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 28px auto;
+      padding: 18px;
+    }
+
+    .profile-card {
+      display: flex;
+      gap: 18px;
+      background: #fff;
+      padding: 18px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+    }
+
+    .avatar {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #ffd6e8, #f3d1dc);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 34px;
+      font-weight: bold;
+      color: #5a2a55;
+    }
+
+    .links a {
+      display: inline-block;
+      margin-right: 12px;
+      margin-top: 8px;
+      padding: 8px 14px;
+      background: #ffe4ef;
+      color: #d63384;
+      border-radius: 8px;
+      text-decoration: none;
+      border: 1px solid #d63384;
+    }
+
+    .links a:hover {
+      background: #d63384;
+      color: white;
+    }
+
+    .section {
+      margin-top: 35px;
+    }
+
+    .section h3 {
+      font-family: 'Playfair Display', serif;
+      color: #d63384;
+      font-size: 26px;
+    }
+
+    .appointment-card {
+      background: white;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+    }
+
+    .appointment-card h4 {
+      margin: 0;
+      color: #d63384;
+      font-size: 20px;
+    }
+
+    .appointment-card p {
+      margin: 6px 0;
+    }
+
+    .edit-btn, .cancel-btn {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .edit-btn {
+      background: #d63384;
+      color: white;
+    }
+
+    .edit-btn:hover {
+      background: #b1256b;
+    }
+
+    .cancel-btn {
+      background: #ffffff;
+      border: 1px solid #d63384;
+      color: #d63384;
+      margin-left: 10px;
+    }
+
+    .cancel-btn:hover {
+      background: #d63384;
+      color: white;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>My Profile</h1>
+  </header>
+
+  <div class="container">
+
+    <!-- PROFILE CARD -->
+    <div class="profile-card">
+      <div class="avatar">
+        <%= user ? (user.name ? user.name.charAt(0).toUpperCase() : user.email.charAt(0).toUpperCase()) : 'U' %>
+      </div>
+
+      <div class="info">
+        <h2><%= user ? (user.name || user.email) : '' %></h2>
+        <p><strong>Email:</strong> <%= user.email %></p>
+        <p><strong>Contact:</strong> <%= user.contact %></p>
+
+        <div class="links">
+          <a href="/mycart">My Cart</a>
+          <a href="/orders">My Orders</a>
+          <a href="/logout">Logout</a>
+          <a href="/">Home</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- APPOINTMENTS -->
+    <div class="section">
+      <h3>Your Appointments</h3>
+
+      <% if (appointments.length === 0) { %>
+        <p>No appointments yet. <a href="/booknow" style="color:#d63384;">Book now</a></p>
+      <% } else { %>
+
+        <% appointments.forEach(a => { 
+            function formatDate(d) {
+              return new Date(d).toLocaleDateString("en-IN", {
+                day: "2-digit",
+                month: "long",
+                year: "numeric"
+              });
+            }
+        %>
+
+          <div class="appointment-card">
+            <h4><%= a.name %></h4>
+
+            <p><b>Date:</b> <%= formatDate(a.date) %></p>
+            <p><b>Time:</b> <%= a.time %></p>
+            <p><b>City:</b> <%= a.city %>, <%= a.state %></p>
+            <p><b>Contact:</b> <%= a.contact %></p>
+
+            <a class="edit-btn" href="/booknow?edit=<%= a._id %>">Edit Appointment</a>
+
+            <!-- CANCEL BUTTON -->
+            <a class="cancel-btn" href="/appointment/delete/<%= a._id %>" onclick="return confirm('Cancel this appointment?')">
+              Cancel
+            </a>
+
+          </div>
+
+        <% }) %>
+      <% } %>
+
+    </div>
+
+  </div>
+
+</body>
+</html>

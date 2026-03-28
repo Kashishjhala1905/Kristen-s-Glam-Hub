@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>My Orders - Kristen's Glam Hub</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Playfair+Display&display=swap" rel="stylesheet">
+  <style>
+    body{margin:0;font-family:Roboto;background:#fff8f5}
+    header{background:linear-gradient(90deg,#f3d1dc,#ffe0f0);padding:20px;text-align:center}
+    header h1{margin:0;color:#5a2a55;font-family:'Playfair Display',serif}
+    .container{max-width:1000px;margin:28px auto;padding:18px}
+    .order-card{background:#fff;padding:14px;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,0.04);margin-bottom:12px}
+    .order-card h3{margin:0 0 8px}
+    .items{margin-top:8px}
+    .items li{margin-bottom:6px}
+    .empty{padding:28px;text-align:center;background:#fff;border-radius:10px}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>My Orders</h1>
+  </header>
+
+  <div class="container">
+    <% if (!orders || orders.length === 0) { %>
+      <div class="empty">
+        <p>You don't have any orders yet.</p>
+        <p><a href="/beautyproducts">Shop now</a></p>
+      </div>
+    <% } else { %>
+      <% orders.forEach(function(o){ %>
+        <div class="order-card">
+          <h3>Order #: <%= o._id %></h3>
+          <div><strong>Status:</strong> <%= o.status %> &nbsp; | &nbsp; <strong>Date:</strong> <%= new Date(o.createdAt).toLocaleString() %></div>
+          <div style="margin-top:10px"><strong>Total:</strong> ₹<%= o.total %></div>
+          <ul class="items">
+            <% o.items.forEach(function(it){ %>
+              <li><strong><%= it.name %></strong> — <%= it.price %> × <%= it.qty %></li>
+            <% }) %>
+          </ul>
+        </div>
+      <% }) %>
+    <% } %>
+  </div>
+</body>
+</html>

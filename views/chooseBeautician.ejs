@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Choose Your Beautician | Kristen's Glam Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #fff0f5;
+      font-family: 'Roboto', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      font-family: "Playfair Display", serif;
+      color: #d63384;
+      margin-top: 40px;
+    }
+
+    .beautician-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+      margin: 40px 0;
+    }
+
+    .beautician-card {
+      background: white;
+      width: 220px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .beautician-card:hover {
+      transform: scale(1.05);
+    }
+
+    .beautician-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .beautician-card h3 {
+      margin: 10px 0;
+      color: #333;
+    }
+
+    .beautician-card p {
+      color: #777;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .skip-btn {
+      background-color: #d63384;
+      color: white;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-bottom: 40px;
+      transition: background-color 0.3s ease;
+    }
+
+    .skip-btn:hover {
+      background-color: #c2185b;
+    }
+  </style>
+</head>
+<body>
+  <h1>Choose Your Beautician</h1>
+
+  <div class="beautician-list">
+    <div class="beautician-card">
+      <img src="/images/beautician1.jpg" alt="Beautician 1">
+      <h3>Kristen Johnson</h3>
+      <p>Specialist in Hair & Makeup</p>
+    </div>
+    <div class="beautician-card">
+      <img src="/images/beautician2.jpg" alt="Beautician 2">
+      <h3>Maria Lopez</h3>
+      <p>Facials & Skin Treatments Expert</p>
+    </div>
+    <div class="beautician-card">
+      <img src="/images/beautician3.jpg" alt="Beautician 3">
+      <h3>Emma Brown</h3>
+      <p>Nail Art & Styling Specialist</p>
+    </div>
+    <div class="beautician-card">
+      <img src="/images/beautician4.jpg" alt="Beautician 4">
+      <h3>Sophia Lee</h3>
+      <p>Bridal & Party Makeover Artist</p>
+    </div>
+  </div>
+
+  <button class="skip-btn" onclick="skipProcess()">Skip this process</button>
+
+  <script>
+    function skipProcess() {
+      alert("😊 Thank you for choosing us! Your appointment is booked successfully.");
+      window.location.href = "/booknow"; // redirect to home or dashboard
+    }
+  </script>
+</body>
+</html>

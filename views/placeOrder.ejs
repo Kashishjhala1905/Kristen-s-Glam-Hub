@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Place Order | Kristen’s Glam Hub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Edu+AU+VIC+WA+NT+Arrows:wght@400..700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: #fff8f5;
+    }
+
+    nav {
+      background: #fff;
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 600;
+      margin-right: 16px;
+    }
+
+    h1 {
+      text-align: center;
+      font-family: "Edu AU VIC WA NT Arrows", cursive;
+      background: linear-gradient(to right, #f3d1dc, #ffe0f0);
+      padding: 26px;
+      margin: 0;
+      font-size: 38px;
+      color: #5a2a55;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      background: #fff;
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    h3 {
+      color: #d63384;
+      margin-bottom: 10px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0 14px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    button {
+      background: #d63384;
+      color: #fff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    button:hover {
+      background-color: #e36fa9;
+    }
+
+    .item {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .total {
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 12px;
+      text-align: right;
+    }
+
+    .muted {
+      color: #888;
+      font-size: 14px;
+    }
+
+    hr {
+      margin: 26px 0;
+      border: none;
+      border-top: 1px solid #eee;
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <div>
+      <a href="/">Home</a>
+      <a href="/beautyproducts">Products</a>
+      <a href="/mycart">My Cart</a>
+    </div>
+    <div>
+      <a href="/profile">My Profile</a>
+    </div>
+  </nav>
+
+  <h1>Place Order</h1>
+
+  <div class="container">
+
+    <!-- ADDRESS SECTION -->
+    <h3>Delivery Address</h3>
+
+    <% if (!address) { %>
+      <form method="POST" action="/order/address">
+        <input type="text" name="street" placeholder="House no, Building, Street, Area" required>
+        <input type="text" name="city" placeholder="City" required>
+        <input type="text" name="state" placeholder="State" required>
+        <input type="text" name="pincode" placeholder="Pincode" required>
+        <button type="submit">Save Address</button>
+      </form>
+    <% } else { %>
+      <p><strong><%= address.street %></strong></p>
+      <p><%= address.city %>, <%= address.state %> - <%= address.pincode %></p>
+    <% } %>
+
+    <hr>
+
+    <!-- PAYMENT MODE -->
+    <% if (address && !paymentMode) { %>
+      <h3>Select Payment Mode</h3>
+
+      <form method="POST" action="/order/payment-mode">
+        <label>
+          <input type="radio" name="paymentMode" value="COD" required>
+          Cash on Delivery
+        </label><br>
+
+        <label>
+          <input type="radio" name="paymentMode" value="UPI">
+          UPI
+        </label><br>
+
+        <label>
+          <input type="radio" name="paymentMode" value="CARD">
+          Credit / Debit Card
+        </label><br><br>
+
+        <button type="submit">Save Payment Mode</button>
+      </form>
+    <% } %>
+
+    <% if (paymentMode) { %>
+      <h3>Payment Mode</h3>
+      <p><strong><%= paymentMode %></strong></p>
+    <% } %>
+
+    <hr>
+
+    <!-- ORDER SUMMARY -->
+    <h3>Order Summary</h3>
+
+    <% cart.forEach(item => { %>
+      <div class="item">
+        <span><%= item.name %> × <%= item.qty || 1 %></span>
+        <span>₹<%= item.price * (item.qty || 1) %></span>
+      </div>
+    <% }) %>
+
+    <div class="total">Total: ₹<%= total %></div>
+
+    <hr>
+
+    <!-- FINAL BUTTON -->
+    <% if (address && paymentMode) { %>
+      <form method="GET" action="/payment">
+        <button>Proceed to Payment</button>
+      </form>
+    <% } else { %>
+      <p class="muted">Please add address and select payment mode to continue</p>
+    <% } %>
+
+  </div>
+
+</body>
+</html>

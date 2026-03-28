@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Pay Now | Kristen’s Glam Hub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Edu+AU+VIC+WA+NT+Arrows:wght@400..700&display=swap" rel="stylesheet">
+
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: #fff8f5;
+    }
+
+    nav {
+      background: #fff;
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 600;
+      margin-right: 16px;
+    }
+
+    h1 {
+      text-align: center;
+      font-family: "Edu AU VIC WA NT Arrows", cursive;
+      background: linear-gradient(to right, #f3d1dc, #ffe0f0);
+      padding: 26px;
+      margin: 0;
+      font-size: 38px;
+      color: #5a2a55;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+      text-align: center;
+    }
+
+    h3 {
+      color: #d63384;
+      margin-bottom: 16px;
+    }
+
+    button {
+      background: #d63384;
+      color: #fff;
+      border: none;
+      padding: 12px 22px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background-color: #e36fa9;
+    }
+
+    .success {
+      color: green;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .qr {
+      width: 200px;
+      margin: 20px auto;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <div>
+      <a href="/">Home</a>
+      <a href="/beautyproducts">Products</a>
+      <a href="/mycart">My Cart</a>
+    </div>
+    <div>
+      <a href="/profile">My Profile</a>
+    </div>
+  </nav>
+
+  <h1>Payment</h1>
+
+  <div class="container">
+
+    <% if (paymentMode === "COD") { %>
+
+      <h3>Cash on Delivery</h3>
+      <p class="success">🎉 Your order has been placed successfully!</p>
+      <a href="/"><button>Go to Home</button></a>
+
+    <% } else if (paymentMode === "UPI" || paymentMode === "CARD") { %>
+
+      <h3>Complete Your Payment</h3>
+      <p>Total Amount: ₹<%= total %></p>
+
+      <button id="payBtn">Pay Now</button>
+
+    <% } %>
+
+  </div>
+
+<script>
+
+const btn = document.getElementById("payBtn");
+
+if (btn) {
+
+  btn.onclick = async function () {
+
+    const res = await fetch("/create-order", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        amount: <%= total %>
+      })
+    });
+
+    const data = await res.json();
+
+    const options = {
+      key: "YOUR_KEY_ID",
+      amount: data.amount,
+      currency: "INR",
+      name: "Kristen’s Glam Hub",
+      description: "Beauty Products Payment",
+      order_id: data.id,
+
+      handler: async function (response) {
+
+        await fetch("/verify-payment", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            amount: <%= total %>,
+            mode: "<%= paymentMode %>"
+          })
+        });
+
+        window.location.href = "/";
+      },
+
+      theme: {
+        color: "#d63384"
+      }
+    };
+
+    const rzp = new Razorpay(options);
+    rzp.open();
+  }
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Select Address</title>
+  <style>
+    body { font-family: Arial; background:#f5f5f5; margin:0; }
+    .container { width:60%; margin:40px auto; background:#fff; padding:30px; }
+    h2 { margin-bottom:20px; }
+    input { width:100%; padding:12px; margin-bottom:15px; }
+    button {
+      width:100%;
+      padding:14px;
+      background:#ff3f6c;
+      color:white;
+      border:none;
+      font-size:16px;
+      cursor:pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+  <h2>DELIVERY ADDRESS</h2>
+
+  <form method="POST" action="/address">
+    <input name="name" placeholder="Full Name" required value="<%= address?.name || '' %>">
+    <input name="mobile" placeholder="Mobile Number" required value="<%= address?.mobile || '' %>">
+    <input name="pincode" placeholder="Pincode" required value="<%= address?.pincode || '' %>">
+    <input name="address" placeholder="Address" required value="<%= address?.address || '' %>">
+    <input name="city" placeholder="City" required value="<%= address?.city || '' %>">
+    <input name="state" placeholder="State" required value="<%= address?.state || '' %>">
+
+    <button>CONTINUE TO PAYMENT</button>
+  </form>
+</div>
+
+</body>
+</html>

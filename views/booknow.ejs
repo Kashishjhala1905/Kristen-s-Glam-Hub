@@ -3,14 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Beauty Parlour Appointment</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Arrows:wght@400..700&display=swap"
-    rel="stylesheet"
-  />
+  <title><%= appointment ? "Edit Appointment" : "Book Your Appointment" %></title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto:wght@400;700&family=Edu+AU+VIC+WA+NT+Arrows:wght@400..700&display=swap" rel="stylesheet">
+
   <style>
     html, body {
       margin: 0;
@@ -19,39 +15,45 @@
       overflow-x: hidden;
       font-family: 'Roboto', sans-serif;
       background-color: #f4f4f4;
-      box-sizing: border-box;
     }
 
-    .navbar {
-      position: sticky;
-      top: 0;
-      width: 100%;
-      background-color: #fff;
+    nav {
+      background-color: #ffffff;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 15px 5vw;
+      padding: 12px 40px;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-      z-index: 1000;
-      box-sizing: border-box;
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
 
-    .nav-left, .nav-right {
+    nav ul {
+      list-style: none;
       display: flex;
-      align-items: center;
+      gap: 25px;
+      margin: 0;
+      padding: 0;
     }
 
-    .nav-left a, .nav-right a {
+    nav ul li a, .login {
       text-decoration: none;
       color: #333;
-      font-weight: 500;
-      margin: 0 15px;
-      transition: color 0.3s ease;
-      white-space: nowrap;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+    nav ul li a:hover, .login:hover {
+      color: #d63384;
     }
 
-    .nav-left a:hover, .nav-right a:hover {
-      color: #6C63FF;
+    .form-container h1 {
+      text-align: center;
+      font-family: "Edu AU VIC WA NT Arrows", cursive;
+      font-size: 42px;
+      color: transparent;
+      -webkit-text-stroke: 1.4px #d63384;
+      margin-bottom: 15px;
     }
 
     .form-wrapper {
@@ -64,165 +66,158 @@
     .form-container {
       background-color: white;
       padding: 30px;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
       width: 100%;
       max-width: 600px;
-    }
-
-    .form-container h2 {
-      text-align: center;
-      margin-bottom: 20px;
-      font-family: "Edu AU VIC WA NT Arrows", cursive;
-      color: #333;
     }
 
     .form-container label {
       font-weight: 500;
       margin-bottom: 8px;
       display: block;
-      color: #555;
+      color: #444;
     }
 
     .form-container input,
     .form-container select {
       width: 100%;
       padding: 12px;
-      margin: 8px 0;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      box-sizing: border-box;
+      margin: 8px 0 18px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
     }
 
     .form-container button {
       width: 100%;
       padding: 12px;
-      background-color: #6C63FF;
+      background-color: #d63384;
       color: white;
       border: none;
-      border-radius: 5px;
+      border-radius: 6px;
       cursor: pointer;
-      font-size: 16px;
+      font-size: 18px;
+      transition: 0.3s ease;
     }
 
     .form-container button:hover {
-      background-color: #5a54e5;
+      background-color: #b1256b;
     }
 
-    .thank-you-message {
+    /* Popups — Hidden until flash message exists */
+    .alert {
       display: none;
-      text-align: center;
-      font-size: 18px;
-      font-weight: bold;
-      background-color: #e0f7e9;
-      color: #28a745;
-      border: 1px solid #b2dfdb;
-      padding: 12px;
+      max-width: 600px;
+      margin: 15px auto;
+      padding: 14px;
       border-radius: 6px;
-      margin-bottom: 20px;
-      animation: fadeIn 0.5s ease-in-out;
+      text-align: center;
+      font-weight: 500;
+      font-size: 16px;
     }
-    .home-button {
-        display: inline-block;
-        text-align: center;
-        margin-top: 15px;
-        text-decoration: none;
-        color: #6C63FF;
-        font-weight: 500;
-        font-size: 16px;
-        transition: color 0.3s ease;
-      }
-      
-      .home-button:hover {
-        color: #5a54e5;
-        text-decoration: underline;
-      }
-      
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
+    .alert.show { display: block; }
+
+    .alert-success { background-color: #fad6e7; color: #8a245a; }
+    .alert-error { background-color: #f8d7da; color: #721c24; }
+
+    .home-button {
+      display: block;
+      text-align: center;
+      margin-top: 12px;
+      text-decoration: none;
+      color: #6C63FF;
+      font-size: 16px;
     }
   </style>
 </head>
+
 <body>
 
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="nav-left">
-      <a href="/services">Services</a>
-      <a href="/beautyproducts">Beauty Products</a>
-      <a href="/contact">Contact Us</a>
-    </div>
-    <div class="nav-right">
-      <a href="#login">Log In</a>
-    </div>
-  </nav>
+<!-- 🌸 NAVBAR -->
+<nav>
+  <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/booknow">Book Now</a></li>
+      <li><a href="/services">Services</a></li>
+      <li><a href="/beautyproducts">Beauty Products</a></li>
+      <li><a href="/contact">Contact</a></li>
+  </ul>
 
-  <!-- Form Section -->
-  <div class="form-wrapper">
-    <div class="form-container">
-      <h2>Book Your Appointment</h2>
-
-      <!-- Thank You Message -->
-      <div class="thank-you-message" id="thank-you-message">
-        😊 Thanks for choosing us, we will contact you soon.
-      </div>
-
-      <form id="appointment-form">
-        <label for="name">Full Name</label>
-        <input type="text" id="name" name="name" required />
-
-        <label for="contact">Contact Number</label>
-        <input type="tel" id="contact" name="contact" required />
-
-        <label for="gender">Gender</label>
-        <select id="gender" name="gender" required>
-          <option value="female">Female</option>
-          <option value="male">Male</option>
-          <option value="other">Other</option>
-        </select>
-
-        <label for="time">Preferred Time</label>
-        <input type="time" id="time" name="time" required />
-
-        <label for="appointment-mode">Mode of Appointment</label>
-        <select id="appointment-mode" name="appointment-mode" required>
-          <option value="online">Online</option>
-          <option value="offline">Offline</option>
-        </select>
-
-        <label for="city">City</label>
-        <input type="text" id="city" name="city" required />
-
-        <label for="state">State</label>
-        <input type="text" id="state" name="state" required />
-
-        <button type="submit">Book Appointment</button>
-        <a href="/" class="home-button">← Return to Home</a>
-      </form>
-    </div>
+  <div class="nav-right">
+      <% if (!user) { %>
+          <a class="login" href="/login">Login</a> / 
+          <a class="login" href="/signup">Sign Up</a>
+      <% } else { %>
+          <a class="login" href="/profile">My Profile</a> / 
+          <a class="login" href="/logout">Logout</a>
+      <% } %>
   </div>
+</nav>
 
-  <script>
-    const form = document.getElementById("appointment-form");
-    const thankYouMessage = document.getElementById("thank-you-message");
 
-    form.addEventListener("submit", function(event) {
-      event.preventDefault(); // Prevent form submission
+<!-- 🌸 POPUP MESSAGES -->
+<% if (success_msg) { %>
+  <div class="alert alert-success show"><%= success_msg %></div>
+<% } %>
 
-      // Show the thank you message
-      thankYouMessage.style.display = "block";
+<% if (error_msg) { %>
+  <div class="alert alert-error show"><%= error_msg %></div>
+<% } %>
 
-      // Reset form fields
-      form.reset();
 
-      // Hide thank you message after 5 seconds
-      setTimeout(() => {
-        thankYouMessage.style.display = "none";
-      }, 5000);
-    });
-  </script>
+<!-- 🌸 FORM SECTION -->
+<div class="form-wrapper">
+  <div class="form-container">
+
+    <h1><%= appointment ? "Edit Appointment" : "Book Your Appointment" %></h1>
+
+    <form method="POST" action="/booknow">
+
+      <input type="hidden" name="appt_id" value="<%= appointment ? appointment._id : '' %>">
+
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" 
+             value="<%= appointment ? appointment.name : '' %>" required>
+
+      <label for="contact">Contact Number</label>
+      <input type="tel" id="contact" name="contact"
+             value="<%= appointment ? appointment.contact : '' %>" required>
+
+      <label for="gender">Gender</label>
+      <select id="gender" name="gender" required>
+        <option value="female" <%= appointment && appointment.gender==="female" ? "selected" : "" %>>Female</option>
+        <option value="male" <%= appointment && appointment.gender==="male" ? "selected" : "" %>>Male</option>
+        <option value="other" <%= appointment && appointment.gender==="other" ? "selected" : "" %>>Other</option>
+      </select>
+
+      <!-- 🌸 DATE FIELD (New Feature) -->
+      <label for="date">Choose Appointment Date</label>
+      <input type="date" id="date" name="date"
+             min="<%= new Date().toISOString().split('T')[0] %>"
+             max="<%= new Date(Date.now() + 30*24*60*60*1000).toISOString().split('T')[0] %>"
+             value="<%= appointment ? appointment.date : '' %>"
+             required>
+
+      <label for="time">Preferred Time</label>
+      <input type="time" id="time" name="time"
+             value="<%= appointment ? appointment.time : '' %>" required>
+
+      <label for="city">City</label>
+      <input type="text" id="city" name="city"
+             value="<%= appointment ? appointment.city : '' %>" required>
+
+      <label for="state">State</label>
+      <input type="text" id="state" name="state"
+             value="<%= appointment ? appointment.state : '' %>" required>
+
+      <button type="submit"><%= appointment ? "Save Changes" : "Submit Booking" %></button>
+    </form>
+
+    <a href="/" class="home-button">← Return to Home</a>
+  </div>
+</div>
 
 </body>
 </html>

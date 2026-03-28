@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Services | Kristen's Glam Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Arrows:wght@400..700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: #fff8f5;
+    }
+
+    /* 🌸 Navbar */
+    nav {
+      background-color: #ffffff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 40px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul li a, .login {
+      text-decoration: none;
+      color: #333;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    nav ul li a:hover , .login:hover {
+      color: #d63384;
+    }
+
+    header {
+      text-align: center;
+      padding: 40px 20px;
+      background: linear-gradient(to right, #f3d1dc, #ffe0f0);
+    }
+
+    header h1 {
+      font-family: "Edu AU VIC WA NT Arrows", cursive;
+      font-size: 48px;
+      margin: 0;
+      color: #5a2a55;
+    }
+
+    header h5 {
+      color: #5a2a55;
+      margin-top: 10px;
+      letter-spacing: 2px;
+    }
+
+    .section {
+      padding: 40px 20px;
+    }
+
+    .section h2 {
+      font-size: 32px;
+      color: #d63384;
+      margin-bottom: 30px;
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      justify-items: center;
+    }
+
+    .service-box {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      width: 220px;
+      text-align: center;
+    }
+
+    .service-box:hover {
+      transform: scale(1.03);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .service-box img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+    }
+
+    .service-box h3 {
+      margin: 10px;
+      font-size: 18px;
+      color: #333;
+    }
+
+    .service-box p {
+      margin: 0 10px 15px;
+      font-size: 14px;
+      color: #666;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 🌸 Navbar -->
+  <nav>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/booknow">Book Now</a></li>
+        <li><a href="/services">Services</a></li>
+        <li><a href="/beautyproducts">Beauty Products</a></li>
+        <li><a href="/contact">Contact</a></li>
+    </ul>
+
+    <div class="nav-right">
+        <% if (!user) { %>
+            <a class="login" href="/login" class="nav-btn">Login</a> / 
+            <a class="login" href="/signup" class="nav-btn">Sign Up</a>
+        <% } else { %>
+            <a class="login" href="/profile" class="nav-btn">My Profile</a>
+        <% } %>
+    </div>
+</nav>
+
+
+  <header>
+    <h1>Our Signature Services</h1>
+    <h5>WHERE SOPHISTICATION MEETS SKIN</h5>
+  </header>
+
+  <!-- 🌸 Skin -->
+  <div class="section">
+    <h2>Skin</h2>
+    <div class="services-grid">
+      <div class="service-box"><img src="images/skin.jpg"><h3>Deep Cleansing</h3><p>Purify your skin with gentle exfoliation.</p></div>
+      <div class="service-box"><img src="images/facial.jpg"><h3>Glow Therapy</h3><p>Enhance radiance with organic ingredients.</p></div>
+      <div class="service-box"><img src="images/acnectrl.jpg"><h3>Acne Control</h3><p>Fight breakouts with professional care.</p></div>
+      <div class="service-box"><img src="images/hydra.jpg"><h3>Hydra Facial</h3><p>Deep hydration for youthful skin.</p></div>
+      <div class="service-box"><img src="images/skinPolishing.jpg"><h3>Skin Polishing</h3><p>Removes tan and evens skin tone.</p></div>
+      <div class="service-box"><img src="images/led.jpg"><h3>LED Light Therapy</h3><p>Rejuvenates skin & reduces fine lines.</p></div>
+      <div class="service-box"><img src="images/Brightening.jpg"><h3>Brightening Peel</h3><p>Boost glow with fruit-based enzymes.</p></div>
+      <div class="service-box"><img src="images/luxury.jpg"><h3>Luxury Facial</h3><p>Indulgent care for glowing skin.</p></div>
+    </div>
+  </div>
+
+  <!-- 🌸 Hair -->
+  <div class="section">
+    <h2>Hair</h2>
+    <div class="services-grid">
+      <div class="service-box"><img src="images/haircut.jpg"><h3>Haircut</h3><p>Customized cuts for every face shape.</p></div>
+      <div class="service-box"><img src="images/keratin.jpg"><h3>Keratin Treatment</h3><p>Frizz-free and shiny smooth hair.</p></div>
+      <div class="service-box"><img src="images/scalp.jpg"><h3>Hair Spa</h3><p>Nourishing therapy for healthy hair.</p></div>
+      <div class="service-box"><img src="images/hairColouring.jpg"><h3>Global Coloring</h3><p>Vibrant and lasting hair color.</p></div>
+      <div class="service-box"><img src="images/highlights.jpg"><h3>Highlights</h3><p>Subtle or bold highlights to match your style.</p></div>
+      <div class="service-box"><img src="images/hairStraightening.jpg"><h3>Hair Straightening</h3><p>Get silky, smooth, straight hair.</p></div>
+      <div class="service-box"><img src="images/hairCurling.jpg"><h3>Hair Curling</h3><p>Soft waves or tight curls – your choice!</p></div>
+      <div class="service-box"><img src="images/hair.jpg"><h3>Scalp Treatment</h3><p>Strengthens roots and reduces dandruff.</p></div>
+    </div>
+  </div>
+
+  <!-- 🌸 Facials -->
+  <div class="section">
+    <h2>Facials</h2>
+    <div class="services-grid">
+      <div class="service-box"><img src="images/goldFacial.jpg"><h3>Gold Facial</h3><p>Luxury facial for instant radiance.</p></div>
+      <div class="service-box"><img src="images/diamond.jpg"><h3>Diamond Facial</h3><p>Brightens and firms your skin.</p></div>
+      <div class="service-box"><img src="images/fruitFacial.jpg"><h3>Fruit Facial</h3><p>Gentle, refreshing glow facial.</p></div>
+      <div class="service-box"><img src="images/oxy.jpg"><h3>Oxy Facial</h3><p>Infuses oxygen for vibrant skin.</p></div>
+      <div class="service-box"><img src="images/collagen.jpg"><h3>Collagen Boost</h3><p>Restores elasticity and firmness.</p></div>
+      <div class="service-box"><img src="images/detox.jpg"><h3>Detox Facial</h3><p>Removes toxins for clear skin.</p></div>
+      <div class="service-box"><img src="images/antiPig.jpg"><h3>Anti-Pigmentation</h3><p>Targets dark spots & discoloration.</p></div>
+      <div class="service-box"><img src="images/hydMask.jpg"><h3>Hydrating Mask</h3><p>Intense moisture boost therapy.</p></div>
+    </div>
+  </div>
+
+  <!-- 🌸 Makeup -->
+  <div class="section">
+    <h2>Makeup</h2>
+    <div class="services-grid">
+      <div class="service-box"><img src="images/makeover.jpg"><h3>Bridal Makeup</h3><p>Elegant look for your big day.</p></div>
+      <div class="service-box"><img src="images/party-makeover.jpg"><h3>Party Makeup</h3><p>Glam up for any event.</p></div>
+      <div class="service-box"><img src="images/engMakeup.jpg"><h3>Engagement Makeup</h3><p>Soft glow with natural tones.</p></div>
+      <div class="service-box"><img src="images/hd.jpg"><h3>HD Makeup</h3><p>Flawless finish for photoshoots.</p></div>
+      <div class="service-box"><img src="images/airBrush.jpg"><h3>Airbrush Makeup</h3><p>Long-lasting and picture-perfect.</p></div>
+      <div class="service-box"><img src="images/everDay.jpg"><h3>Everyday Look</h3><p>Subtle and elegant daily makeup.</p></div>
+      <div class="service-box"><img src="images/eyeMakeup.jpg"><h3>Eye Makeup</h3><p>Smoky, bold, or soft – your style.</p></div>
+      <div class="service-box"><img src="images/makeConst.jpg"><h3>Makeup Consultation</h3><p>Expert advice on shades & products.</p></div>
+    </div>
+  </div>
+
+  <!-- 🌸 Nail Art -->
+  <div class="section">
+    <h2>Nail Art</h2>
+    <div class="services-grid">
+      <div class="service-box"><img src="images/nail.jpg"><h3>Gel Nail Art</h3><p>Long-lasting shine and style.</p></div>
+      <div class="service-box"><img src="images/nail-extension.jpg"><h3>Nail Extensions</h3><p>Perfectly sculpted & elegant nails.</p></div>
+      <div class="service-box"><img src="images/classicManicure.jpg"><h3>Classic Manicure</h3><p>Clean, nourished, healthy nails.</p></div>
+      <div class="service-box"><img src="images/frenchTip.jpg"><h3>French Tips</h3><p>Timeless and sophisticated look.</p></div>
+      <div class="service-box"><img src="images/3dNail.jpg"><h3>3D Nail Art</h3><p>Creative designs that pop.</p></div>
+      <div class="service-box"><img src="images/glitterNails.jpg"><h3>Glitter Nails</h3><p>Perfect sparkle for parties.</p></div>
+      <div class="service-box"><img src="images/cuticleCare.jpg"><h3>Cuticle Care</h3><p>Moisturize and smoothen cuticles.</p></div>
+      <div class="service-box"><img src="images/nailStic.jpg"><h3>Nail Stickers</h3><p>Trendy designs made easy.</p></div>
+    </div>
+  </div>
+
+  <!-- 🌸 Closing Section -->
+  <section style="text-align:center; padding:50px 20px; background-color:#f7f7f7; margin-top:50px;">
+    <h2 style="font-family:'Playfair Display', serif; font-size:2em; color:#444;">Unleash Your Inner Glow!</h2>
+    <p style="font-size:1.1em; color:#666; max-width:600px; margin:20px auto;">
+      At Kristen's Glam Hub, every detail is tailored to enhance your beauty and confidence. Let us pamper you with care, creativity, and expert touch. We’re here to help you look and feel your best — always.
+    </p>
+  </section>
+
+</body>
+</html>

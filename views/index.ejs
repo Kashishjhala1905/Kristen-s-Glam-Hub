@@ -1,32 +1,209 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kristen's Glam Hub</title>
-    <link rel="stylesheet" href="/css/style.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Arrows:wght@400..700&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <div class="title">
-      <div class="overlay">
-        <h1 class="slide-up-down">KRISTEN'S &nbsp;&nbsp; GLAM &nbsp;&nbsp; HUB</h1>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kristen’s Glam Hub | Home</title>
 
-        <div class="promo-box">
-          <p>Providing NewYork's top Beauty and Makeup Services and Eye Lashes Extensions</p>
-          <p>Don't miss a chance to experience the ultimate beauty transformation. Our expert team is ready to help you shine!</p>
-        </div>
-        
-        <h2>Book your Appointment Now!</h2>
-        <hr><hr><hr><hr><hr><hr>
-        <button onclick="window.location.href='/booknow'" class="booknow">Book Now</button>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: "Roboto", sans-serif;
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      color: white;
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)),
+        url("/images/kristen_stewart_british_vogue_eye_makeup.jpg") no-repeat center center/cover;
+      z-index: -1;
+    }
+
+    h1 {
+      font-family: "Playfair Display", serif;
+      font-size: 4.5rem;
+      font-weight: 700;
+      text-align: center;
+      animation: colorChange 5s infinite alternate ease-in-out;
+    }
+
+    @keyframes colorChange {
+      0% { color: #f3b6d3; }
+      25% { color: #ff9ecd; }
+      50% { color: #ffd6e8; }
+      75% { color: #fbb6ce; }
+      100% { color: #ffffff; }
+    }
+
+    .container {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 8%;
+    }
+
+    .left {
+      max-width: 600px;
+      text-align: left;
+    }
+
+    .left h2 {
+      font-family: "Poppins", sans-serif;
+      font-size: 2.3rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: #ffd6e8;
+    }
+
+    .left p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #f3f3f3;
+      margin-bottom: 25px;
+    }
+
+    .book-btn {
+      display: inline-block;
+      padding: 12px 24px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      background-color: #d63384;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      text-decoration: none;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    .book-btn:hover {
+      background-color: #b1256b;
+      transform: scale(1.05);
+    }
+
+    .right {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      align-items: flex-end;
+      animation: slideIn 2.5s forwards;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(120px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .nav-item {
+      font-size: 1.6rem;
+      font-weight: 600;
+      opacity: 0;
+      transform: translateX(60px);
+      animation: slideItem 1s forwards;
+      font-family: "Poppins", sans-serif;
+    }
+
+    .nav-item:nth-child(1) { animation-delay: 0.8s; }
+    .nav-item:nth-child(2) { animation-delay: 1.2s; }
+    .nav-item:nth-child(3) { animation-delay: 1.6s; }
+    .nav-item:nth-child(4) { animation-delay: 2.0s; }
+    .nav-item:nth-child(5) { animation-delay: 2.4s; }
+
+    @keyframes slideItem {
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .nav-item a { text-decoration: none; color: #ffd6e8; transition: 0.3s; }
+    .nav-item a:hover { color: white; }
+
+    /* 🌸 Toast Popup */
+    #toast {
+      position: fixed;
+      left: 50%;
+      bottom: 30px;
+      transform: translateX(-50%) translateY(20px);
+      background: #d63384;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-weight: 500;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.25s ease-in-out;
+      z-index: 1000;
+      font-family: "Roboto", sans-serif;
+    }
+
+    #toast.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- SINGLE toast -->
+  <div id="toast"></div>
+
+  <div class="container">
+    <div class="left">
+      <h1>Kristen's Glam Hub</h1>
+      <h2>Skin & Hair Perfection</h2>
+      <p>Unveil your inner glow with our luxurious beauty services and products — curated with love to make every look timeless.</p>
+      <a href="/booknow" class="book-btn">Book Now</a>
     </div>
+
+    <div class="right">
+      <div class="nav-item"><a href="/">Home</a></div>
+      <div class="nav-item"><a href="/services">Services</a></div>
+      <div class="nav-item"><a href="/beautyproducts">Beauty Products</a></div>
+      <div class="nav-item"><a href="/booknow">Book Now</a></div>
+      <div class="nav-item"><a href="/contact">Contact</a></div>
     </div>
-    <script src="../public/js/script.js"></script>
-  </body>
+  </div>
+
+<script>
+  function showToast(message) {
+    const toast = document.getElementById("toast");
+    toast.textContent = message;
+    toast.classList.add("show");
+
+    setTimeout(() => {
+      toast.classList.remove("show");
+    }, 2200);
+  }
+
+  // Handle flash message safely
+  <% 
+    let msg = "";
+    if (Array.isArray(success_msg) && success_msg.length > 0) {
+      msg = success_msg[0];
+    } else if (typeof success_msg === "string") {
+      msg = success_msg;
+    }
+  %>
+
+  <% if (msg && msg !== "") { %>
+    showToast("<%= msg %>");
+  <% } %>
+</script>
+
+</body>
 </html>

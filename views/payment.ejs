@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Payment</title>
+  <style>
+    body {
+      font-family: Roboto, sans-serif;
+      background: #fff8f5;
+      padding: 30px;
+    }
+    .box {
+      background: white;
+      max-width: 600px;
+      margin: auto;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #d63384;
+    }
+    .row {
+      margin-bottom: 12px;
+    }
+    .row:hover{
+      background-color: #e36fa9;
+    }
+    
+    .total {
+      font-size: 22px;
+      font-weight: bold;
+      color: #d63384;
+    }
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 20px;
+      background: #d63384;
+      border: none;
+      color: white;
+      font-size: 18px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover{
+      background-color: #e36fa9;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="box">
+  <h2>Order Summary</h2>
+
+ <div class="row"><strong>Name:</strong> <%= user.name %></div>
+<div class="row"><strong>Contact:</strong> <%= user.contact %></div>
+
+<hr>
+
+<div class="row">
+  <h3>Delivery Address:</h3><br>
+  <%= address.street %><br>
+  <%= address.city %> - <%= address.pincode %><br>
+  <%= address.state %>
+</div>
+
+<hr>
+
+<div class="row">
+  <strong>Payment Mode:</strong> <%= paymentMode %>
+</div>
+
+<hr>
+
+<div class="row total">
+  Total Amount: ₹<%= total %>
+</div>
+
+
+  <button>Pay Now</button>
+</div>
+
+</body>
+</html>
