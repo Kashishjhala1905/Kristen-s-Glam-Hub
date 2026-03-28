@@ -73,4 +73,3 @@ exports.booknow =  (req, res) => {
     }
   });
 };
-
