@@ -11,6 +11,8 @@ const Appointment = require("./models/Appointment");
 
 const app = express();
 
+const API_URL = "https://kristen-s-glam-hub.onrender.com";
+
 console.log(process.env.API_URL);
 // ROUTES
 const authRoutes = require("./routes/authRoutes");
