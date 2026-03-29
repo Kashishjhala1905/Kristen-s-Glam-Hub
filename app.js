@@ -10,10 +10,6 @@ const fs = require("fs");
 const Appointment = require("./models/Appointment");
 
 const app = express();
-
-const API_URL = "https://kristen-s-glam-hub.onrender.com";
-
-console.log(process.env.API_URL);
 // ROUTES
 const authRoutes = require("./routes/authRoutes");
 const profileRoutes = require("./routes/profileRoutes");
@@ -39,6 +35,10 @@ mongoose
 
 mongoose.connection.on("connected", () => {
   console.log("🔥 CONNECTED TO DB:", mongoose.connection.name);
+});
+
+app.get("/api/test", (req, res) => {
+  res.json({ message: "API working!" });
 });
 
 // SESSION + FLASH
