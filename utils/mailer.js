@@ -1,16 +1,22 @@
 const nodemailer = require("nodemailer");
 
 exports.sendOTP = async (to, otp) => {
+  const emailUser = process.env.EMAIL_USER?.trim();
+  const emailPass = process.env.EMAIL_PASS?.replace(/\s/g, "");
+
+  if (!emailUser || !emailPass) {
+    throw new Error("Email credentials are missing. Set EMAIL_USER and EMAIL_PASS.");
+  }
+
   const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.EMAIL_USER.trim(),
-      pass: process.env.EMAIL_PASS.trim(),
-    },
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: { user: emailUser, pass: emailPass },
   });
 
   await transporter.sendMail({
-    from: `"Kristen's Glam Hub" <${process.env.EMAIL_USER}>`,
+    from: `"Kristen's Glam Hub" <${emailUser}>`,
     to,
     subject: "Email Verification OTP",
     html: `
