@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beauty Consultation | Kristen's Glam Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #fff4f4, #ffe2f0);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .chat-container {
+            width: 450px;
+            height: 650px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid rgba(214, 51, 132, 0.2);
+            animation: slowFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes slowFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .chat-header {
+            background: #d63384;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .chat-header img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid white;
+        }
+
+        .chat-header h2 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        .end-chat-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .end-chat-btn:hover {
+            background: white;
+            color: #d63384;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background: #fafafa;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 15px;
+            font-size: 14px;
+            line-height: 1.5;
+            position: relative;
+        }
+
+        .bot-msg {
+            background: #fdf2f7;
+            color: #5a2a55;
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+        }
+
+        .user-msg {
+            background: #d63384;
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+        }
+
+        .chat-footer {
+            padding: 15px;
+            background: white;
+            border-top: 1px solid #eee;
+        }
+
+        .options-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .option-btn {
+            background: white;
+            border: 1px solid #d63384;
+            color: #d63384;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: 0.3s;
+        }
+
+        .option-btn:hover {
+            background: #d63384;
+            color: white;
+        }
+
+        .input-area {
+            display: flex;
+            gap: 10px;
+        }
+
+        .input-area input {
+            flex: 1;
+            padding: 10px 15px;
+            border-radius: 25px;
+            border: 1px solid #ddd;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .send-btn {
+            background: #d63384;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .typing-indicator {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 10px;
+            display: none;
+        }
+
+        /* 🌸 Scrollbar */
+        .chat-messages::-webkit-scrollbar { width: 5px; }
+        .chat-messages::-webkit-scrollbar-thumb { background: #ffd6e8; border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+    <div class="chat-container">
+        <div class="chat-header">
+            <div class="header-left">
+                <img src="/expert_avatar.png?v=2" alt="Avatar">
+                <div>
+                    <h2>Glam Expert ✨</h2>
+                    <small style="font-family: 'Roboto', sans-serif; font-size: 11px; opacity: 0.8;">Online & Ready to Help</small>
+                </div>
+            </div>
+            <button class="end-chat-btn" id="endChatBtn">End Chat</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="typing-indicator" id="typing">Expert is thinking...</div>
+        </div>
+        <div class="chat-footer">
+            <div class="options-container" id="options"></div>
+            <form class="input-area" id="inputForm">
+                <input type="text" id="userInput" placeholder="Type your query here..." autocomplete="off">
+                <button type="submit" class="send-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const chatMessages = document.getElementById('chatMessages');
+        const optionsContainer = document.getElementById('options');
+        const typingIndicator = document.getElementById('typing');
+        const inputForm = document.getElementById('inputForm');
+        const userInput = document.getElementById('userInput');
+        const endChatBtn = document.getElementById('endChatBtn');
+
+        const params = new URLSearchParams(window.location.search);
+        const initialType = params.get('type') || 'general';
+
+        const botData = {
+            skin: {
+                start: "Hi there! I see you're interested in Skin Care. What's your main concern?",
+                questions: [
+                    {
+                        q: "How would you describe your skin type?",
+                        options: ["Oily", "Dry", "Combination", "Sensitive"],
+                        mapping: "skinType"
+                    },
+                    {
+                        q: "How often do you follow a skincare routine?",
+                        options: ["Twice a day", "Once a day", "Occasionally", "Never"],
+                        mapping: "routine"
+                    },
+                    {
+                        q: "What is your budget for this treatment?",
+                        options: ["Economy (Under ₹1000)", "Mid-Range (₹1000-₹2500)", "Luxury (Above ₹2500)"],
+                        mapping: "budget"
+                    }
+                ],
+                results: {
+                    "Oily_Twice a day_Mid-Range": "Your skin is well-maintained! I recommend our **Hydra Facial** to keep it balanced and clear.",
+                    "Dry_Occasionally_Luxury": "You need intense moisture. Our **Gold Facial** with serum infusion is perfect for you.",
+                    "default": "Based on your needs, a **Deep Cleansing** or **Skin Polishing** would be a great start!"
+                }
+            },
+            hair: {
+                start: "Hello! Let's get your hair looking fabulous. What's the main goal?",
+                questions: [
+                    {
+                        q: "What is your hair type?",
+                        options: ["Straight", "Wavy", "Curly", "Frizzy/Damaged"],
+                        mapping: "hairType"
+                    },
+                    {
+                        q: "Have you had any chemical treatments recently?",
+                        options: ["Yes, Color/Perm", "No, it's natural"],
+                        mapping: "treatment"
+                    },
+                    {
+                        q: "What's your budget?",
+                        options: ["Budget Friendly", "Premium Care"],
+                        mapping: "budget"
+                    }
+                ],
+                results: {
+                    "Frizzy/Damaged_Yes, Color/Perm_Premium Care": "Your hair needs protein! A **Keratin Treatment** or **Hair Spa** is the best choice.",
+                    "Straight_No, it's natural_Budget Friendly": "A simple **Haircut** and **Scalp Treatment** will keep it fresh and healthy.",
+                    "default": "I suggest a **Global Coloring** or **Highlights** to revitalize your look!"
+                }
+            },
+            facials: {
+                start: "Welcome! Facials are our specialty. What are you looking for today?",
+                questions: [
+                    {
+                        q: "What's the occasion?",
+                        options: ["Daily Glow", "Wedding/Party", "Skin Repair"],
+                        mapping: "occasion"
+                    },
+                    {
+                        q: "Do you prefer organic or clinical products?",
+                        options: ["Organic/Natural", "Clinical/Advanced"],
+                        mapping: "productType"
+                    },
+                    {
+                        q: "Budget range?",
+                        options: ["Under ₹1500", "Above ₹1500"],
+                        mapping: "budget"
+                    }
+                ],
+                results: {
+                    "Wedding/Party_Clinical/Advanced_Above ₹1500": "The **Diamond Facial** or **Luxury Facial** will give you that high-definition glow.",
+                    "Daily Glow_Organic/Natural_Under ₹1500": "Our **Fruit Facial** is perfect for a gentle, natural refresh.",
+                    "default": "Try the **Oxy Facial** for a quick and effective oxygen boost!"
+                }
+            },
+            makeup: {
+                start: "Let's find your perfect look! What style do you prefer?",
+                questions: [
+                    {
+                        q: "Where are you heading?",
+                        options: ["Wedding", "Party", "Photoshoot", "Casual Outing"],
+                        mapping: "event"
+                    },
+                    {
+                        q: "Do you have any skin allergies?",
+                        options: ["No allergies", "Yes, sensitive skin"],
+                        mapping: "sensitivity"
+                    },
+                    {
+                        q: "Budget preference?",
+                        options: ["Standard", "High Definition"],
+                        mapping: "budget"
+                    }
+                ],
+                results: {
+                    "Wedding_No allergies_High Definition": "Go for **Bridal Makeup** or **HD Makeup** for a stunning, flawless look.",
+                    "Party_Yes, sensitive skin_Standard": "Our **Airbrush Makeup** is very gentle and perfect for sensitive skin.",
+                    "default": "An **Everyday Look** or specialized **Eye Makeup** would be a great choice."
+                }
+            },
+            nail: {
+                start: "Nails are the final touch! What are we doing today?",
+                questions: [
+                    {
+                        q: "Preference for length?",
+                        options: ["Natural Length", "Extensions Needed"],
+                        mapping: "length"
+                    },
+                    {
+                        q: "What's your nail health like?",
+                        options: ["Strong", "Brittle/Weak"],
+                        mapping: "health"
+                    },
+                    {
+                        q: "Budget for Nail Art?",
+                        options: ["Basic", "Intricate 3D"],
+                        mapping: "budget"
+                    }
+                ],
+                results: {
+                    "Extensions Needed_Strong_Intricate 3D": "You'll love our **Nail Extensions** with **3D Nail Art**.",
+                    "Natural Length_Brittle/Weak_Basic": "A **Classic Manicure** and **Cuticle Care** will help strengthen your nails.",
+                    "default": "Try **French Tips** or **Glitter Nails** for a chic look."
+                }
+            },
+            general: {
+                start: "Hey! I’m Glam Expert, your beauty buddy. Feel free to ask me anything, anytime. ✨",
+                questions: [
+                    {
+                        q: "What area are you most interested in?",
+                        options: ["Skin", "Hair", "Makeup", "Nails"],
+                        mapping: "type"
+                    }
+                ],
+                results: {
+                    "Skin": "redirect_skin",
+                    "Hair": "redirect_hair",
+                    "Makeup": "redirect_makeup",
+                    "Nails": "redirect_nail"
+                }
+            }
+        };
+
+        let currentType = initialType;
+        if (!botData[currentType]) currentType = 'general';
+
+        let step = 0;
+        let userChoices = [];
+        let isWaitingForConfirmation = false;
+
+        function addMessage(text, isBot = true) {
+            const div = document.createElement('div');
+            div.className = `message ${isBot ? 'bot-msg' : 'user-msg'}`;
+            div.innerHTML = text;
+            chatMessages.appendChild(div);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function showOptions(options) {
+            optionsContainer.innerHTML = '';
+            options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.textContent = opt;
+                btn.onclick = () => handleChoice(opt);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function handleChoice(choice) {
+            addMessage(choice, false);
+            
+            if (isWaitingForConfirmation) {
+                if (choice === "Yes") {
+                    window.location.href = '/services';
+                } else {
+                    isWaitingForConfirmation = false;
+                    optionsContainer.innerHTML = '';
+                    addMessage("Glad you're staying! Let's continue. 😊");
+                    setTimeout(processNextStep, 800);
+                }
+                return;
+            }
+
+            if (currentType === 'general' && step === 0) {
+                currentType = choice.toLowerCase();
+                step = 0;
+                userChoices = [];
+                setTimeout(() => {
+                    addMessage(botData[currentType].start);
+                    processNextStep();
+                }, 800);
+                return;
+            }
+
+            userChoices.push(choice);
+            optionsContainer.innerHTML = '';
+            step++;
+            setTimeout(processNextStep, 800);
+        }
+
+        function processNextStep() {
+            if (isWaitingForConfirmation) return;
+
+            const data = botData[currentType];
+            if (step < data.questions.length) {
+                typingIndicator.style.display = 'block';
+                setTimeout(() => {
+                    typingIndicator.style.display = 'none';
+                    const nextQ = data.questions[step];
+                    addMessage(nextQ.q);
+                    showOptions(nextQ.options);
+                }, 1000);
+            } else {
+                showFinalResult();
+            }
+        }
+
+        function showFinalResult() {
+            typingIndicator.style.display = 'block';
+            setTimeout(() => {
+                typingIndicator.style.display = 'none';
+                const data = botData[currentType];
+                const key = userChoices.join('_');
+                const result = data.results[key] || data.results['default'];
+                
+                addMessage("✨ <b>Expert Suggestion:</b> " + result);
+                addMessage("Our specialists are ready to make this happen for you. Ready to book?");
+                
+                showOptions(["Yes, Book Now", "Explore More Services"]);
+                
+                const btns = optionsContainer.querySelectorAll('.option-btn');
+                btns[0].onclick = () => window.location.href = '/booknow';
+                btns[1].onclick = () => window.location.href = '/services';
+            }, 1500);
+        }
+
+        // 📝 End Chat Logic
+        endChatBtn.onclick = () => {
+            if (isWaitingForConfirmation) return;
+            isWaitingForConfirmation = true;
+            optionsContainer.innerHTML = '';
+            addMessage("Are you sure you want to end this chat?", true);
+            showOptions(["Yes", "No"]);
+        };
+
+        // 📝 Manual Input Handling
+        inputForm.onsubmit = (e) => {
+            e.preventDefault();
+            const text = userInput.value.trim().toLowerCase();
+            if (!text) return;
+
+            addMessage(userInput.value, false);
+            userInput.value = '';
+            optionsContainer.innerHTML = '';
+
+            typingIndicator.style.display = 'block';
+            setTimeout(() => {
+                typingIndicator.style.display = 'none';
+                if (isWaitingForConfirmation) {
+                    if (text.includes("yes")) {
+                        window.location.href = '/services';
+                    } else {
+                        isWaitingForConfirmation = false;
+                        addMessage("Glad you're staying! Let's continue. 😊");
+                        processNextStep();
+                    }
+                } else {
+                    handleManualQuery(text);
+                }
+            }, 1000);
+        };
+
+        function handleManualQuery(text) {
+            if (text.includes("price") || text.includes("cost") || text.includes("budget")) {
+                addMessage("Our services range from ₹299 (Nails) up to ₹9999 (Bridal). Tell me what service you're interested in, and I'll give you a better estimate!");
+            } else if (text.includes("skin") || text.includes("face")) {
+                addMessage("I can definitely help with your skin. Let's start a consultation.");
+                currentType = 'skin'; step = 0; userChoices = []; processNextStep();
+            } else if (text.includes("hair")) {
+                addMessage("Hair care is my specialty! Let's find your perfect style.");
+                currentType = 'hair'; step = 0; userChoices = []; processNextStep();
+            } else if (text.includes("book") || text.includes("appointment")) {
+                addMessage("I can help you with that! Click 'Yes, Book Now' below or type your details.");
+                showOptions(["Yes, Book Now", "I have more questions"]);
+            } else if (text.includes("hello") || text.includes("hi")) {
+                addMessage("Hello gorgeous! How can I make your day more beautiful?");
+            } else {
+                addMessage("That's a great question! I'm still learning every day, but I recommend speaking to our human experts for specialized queries. Want to see our services instead?");
+                showOptions(["View Services", "Start Consultation"]);
+                const btns = optionsContainer.querySelectorAll('.option-btn');
+                btns[0].onclick = () => window.location.href = '/services';
+                btns[1].onclick = () => { step = 0; userChoices = []; processNextStep(); };
+            }
+        }
+
+        window.onload = () => {
+            addMessage(botData[currentType].start);
+            processNextStep();
+        };
+    </script>
+</body>
+</html>

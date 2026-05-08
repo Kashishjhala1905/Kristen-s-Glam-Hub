@@ -5,7 +5,8 @@
   <title>My Cart | Kristen’s Glam Hub</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Edu+AU+VIC+WA+NT+Arrows:wght@400..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Playfair+Display&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
   <style>
     body { margin: 0; background: #fff8f5; font-family: 'Roboto', sans-serif; }
@@ -21,7 +22,42 @@
 
     nav ul { list-style: none; display: flex; gap: 18px; padding: 0; margin: 0; }
     nav ul li a { text-decoration: none; color: #333; font-weight: 600; }
-    nav ul li a:hover { color: #d63384; }
+    nav ul li a:hover, .login:hover { color: #d63384; }
+    .nav-icons { display: flex; gap: 20px; align-items: center; }
+    .nav-icon-wrapper { position: relative; cursor: pointer; }
+    .nav-icon-wrapper:hover .tooltip { opacity: 1; visibility: visible; }
+    .tooltip {
+        position: absolute;
+        top: 110%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #333;
+        color: #fff;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 11px;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transition: 0.3s;
+        z-index: 100;
+    }
+
+    .nav-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #f3d1dc;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        font-weight: bold;
+        color: #5a2a55;
+        overflow: hidden;
+        border: 1px solid #d63384;
+    }
+    .nav-avatar img { width: 100%; height: 100%; object-fit: cover; }
 
     h1 {
       font-family: "Edu AU VIC WA NT Arrows", cursive;
@@ -118,15 +154,42 @@
 
 <body>
 
-<nav>
-  <ul>
-    <li><a href="/">Home</a></li>
-    <li><a href="/services">Services</a></li>
-    <li><a href="/beautyproducts">Beauty Products</a></li>
-    <li><a href="/booknow">Book Now</a></li>
-  </ul>
-  <div><strong>🛒 My Cart</strong></div>
-</nav>
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/booknow">Book Now</a></li>
+      <li><a href="/services">Services</a></li>
+      <li><a href="/beautyproducts">Beauty Products</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+    <div class="nav-right" style="display: flex; gap: 20px; align-items: center;">
+        <div class="nav-icons">
+            <% if (locals.user) { %>
+            <div class="nav-icon-wrapper" onclick="location.href='/wishlist'">
+                <i class="fas fa-heart" style="color:#d63384; font-size:1.2em;"></i>
+                <div class="tooltip">My Wishlist</div>
+            </div>
+            <div class="nav-icon-wrapper" onclick="location.href='/mycart'">
+                <i class="fas fa-shopping-cart" style="color:#333; font-size:1.2em;"></i>
+                <div class="tooltip">My Cart</div>
+            </div>
+            <div class="nav-icon-wrapper" onclick="location.href='/profile'">
+              <div class="nav-avatar">
+                <% if (user.photo) { %>
+                  <img src="<%= user.photo %>" alt="Profile">
+                <% } else { %>
+                  <%= user.name ? user.name.charAt(0).toUpperCase() : user.email.charAt(0).toUpperCase() %>
+                <% } %>
+              </div>
+              <div class="tooltip">My Profile</div>
+            </div>
+            <% } else { %>
+                <a class="login" href="/login">Login</a> / 
+                <a class="login" href="/signup">Sign Up</a>
+            <% } %>
+        </div>
+    </div>
+  </nav>
 
 <h1>My Shopping Bag</h1>
 

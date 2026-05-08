@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Our Services | Kristen's Glam Hub</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Playfair+Display&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Arrows:wght@400..700&display=swap" rel="stylesheet" />
@@ -43,9 +44,45 @@
       transition: color 0.3s ease;
     }
 
-    nav ul li a:hover , .login:hover {
+    nav ul li a:hover, .login:hover {
       color: #d63384;
     }
+
+    .nav-icons { display: flex; gap: 20px; align-items: center; }
+    .nav-icon-wrapper { position: relative; cursor: pointer; }
+    .nav-icon-wrapper:hover .tooltip { opacity: 1; visibility: visible; }
+    .tooltip {
+        position: absolute;
+        top: 110%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #333;
+        color: #fff;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 11px;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transition: 0.3s;
+        z-index: 100;
+    }
+
+    .nav-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #f3d1dc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: bold;
+      color: #5a2a55;
+      overflow: hidden;
+      border: 1px solid #d63384;
+    }
+    .nav-avatar img { width: 100%; height: 100%; object-fit: cover; }
 
     header {
       text-align: center;
@@ -62,8 +99,21 @@
 
     header h5 {
       color: #5a2a55;
-      margin-top: 10px;
+      margin-top: 20px;
       letter-spacing: 2px;
+      display: inline-block;
+      border: 1px solid #5a2a55;
+      padding: 8px 25px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: bold;
+      animation: slowFloat 3s ease-in-out infinite;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    @keyframes slowFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
     }
 
     .section {
@@ -80,9 +130,39 @@
 
     .services-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
       justify-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 1100px) {
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .services-grid { grid-template-columns: 1fr; }
+    }
+
+    .service-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: #ffc107;
+      color: #333;
+      padding: 5px 12px;
+      border-radius: 50px;
+      font-size: 11px;
+      font-weight: bold;
+      text-transform: uppercase;
+      z-index: 2;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .service-box .rating {
+      margin: 5px 0;
+      color: #ffc107;
+      font-size: 14px;
     }
 
     .service-box {
@@ -97,8 +177,8 @@
     }
 
     .service-box:hover {
-      transform: scale(1.03);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     }
 
     .service-box img {
@@ -118,33 +198,246 @@
       font-size: 14px;
       color: #666;
     }
+
+    /* ✨ Hover Card Detail Overlay */
+    .service-box {
+      position: relative;
+    }
+
+    .service-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(214, 51, 132, 0.95);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      padding: 20px;
+      box-sizing: border-box;
+      text-align: center;
+    }
+
+    .service-box:hover .service-overlay {
+      opacity: 1;
+    }
+
+    .service-overlay h4 {
+      margin: 0 0 10px;
+      font-size: 20px;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .service-overlay p {
+      color: #fff !important;
+      font-size: 13px;
+      line-height: 1.4;
+      margin-bottom: 15px;
+    }
+
+    .service-overlay .details {
+      font-weight: bold;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .book-btn {
+      background: white;
+      color: #d63384;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .book-btn:hover {
+      background: #f8f9fa;
+      transform: scale(1.1);
+    }
+
+    /* 🎭 Heading Reveal Animation */
+    .reveal-text span {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: revealLetter 0.05s forwards;
+    }
+
+    @keyframes revealLetter {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* 📝 Questionnaire Styling */
+    .questionnaire-card {
+      background: white;
+      border-radius: 15px;
+      padding: 30px;
+      margin: 40px auto;
+      max-width: 800px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      border-left: 5px solid #d63384;
+      text-align: left;
+    }
+
+    .questionnaire-card h4 {
+      color: #5a2a55;
+      margin-top: 0;
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+    }
+
+    .questionnaire-card .options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .questionnaire-card label {
+      background: #fdf2f7;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: 0.3s;
+      border: 1px solid transparent;
+    }
+
+    .questionnaire-card input[type="radio"] {
+      display: none;
+    }
+
+    .questionnaire-card input[type="radio"]:checked + label {
+      background: #d63384;
+      color: white;
+      border-color: #d63384;
+    }
+
+    .submit-consult {
+      background: #d63384;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    /* 👋 Floating Waving Expert */
+    .floating-expert {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .expert-bubble {
+      background: white;
+      padding: 12px 18px;
+      border-radius: 20px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      margin-bottom: 10px;
+      font-size: 13px;
+      color: #333;
+      max-width: 180px;
+      border: 1px solid #d63384;
+      position: relative;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      pointer-events: none; /* Prevent interference unless hovered */
+    }
+
+    .floating-expert:hover .expert-bubble,
+    .expert-bubble.show-bubble {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .expert-avatar {
+      width: 70px;
+      height: 70px;
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 8px 20px rgba(214, 51, 132, 0.3);
+      border: 3px solid #d63384;
+      overflow: hidden;
+      animation: waveExpert 2s infinite ease-in-out;
+    }
+
+    .expert-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @keyframes waveExpert {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(5deg) translateY(-5px); }
+      75% { transform: rotate(-5deg); }
+    }
   </style>
 </head>
 
 <body>
   <!-- 🌸 Navbar -->
-  <nav>
-    <ul>
+    <nav>
+      <ul>
         <li><a href="/">Home</a></li>
         <li><a href="/booknow">Book Now</a></li>
         <li><a href="/services">Services</a></li>
         <li><a href="/beautyproducts">Beauty Products</a></li>
         <li><a href="/contact">Contact</a></li>
-    </ul>
-
-    <div class="nav-right">
-        <% if (!user) { %>
-            <a class="login" href="/login" class="nav-btn">Login</a> / 
-            <a class="login" href="/signup" class="nav-btn">Sign Up</a>
+      </ul>
+      <div class="nav-right" style="display: flex; gap: 20px; align-items: center;">
+        <% if (locals.user) { %>
+          <div class="nav-icons">
+            <div class="nav-icon-wrapper" onclick="location.href='/wishlist'">
+              <i class="fas fa-heart" style="color:#d63384; font-size:1.2em;"></i>
+              <div class="tooltip">My Wishlist</div>
+            </div>
+            <div class="nav-icon-wrapper" onclick="location.href='/mycart'">
+              <i class="fas fa-shopping-cart" style="color:#333; font-size:1.2em;"></i>
+              <div class="tooltip">My Cart</div>
+            </div>
+            <div class="nav-icon-wrapper" onclick="location.href='/profile'">
+              <div class="nav-avatar">
+                <% if (user.photo) { %>
+                  <img src="<%= user.photo %>" alt="Profile">
+                <% } else { %>
+                  <%= user.name ? user.name.charAt(0).toUpperCase() : user.email.charAt(0).toUpperCase() %>
+                <% } %>
+              </div>
+              <div class="tooltip">My Profile</div>
+            </div>
+          </div>
         <% } else { %>
-            <a class="login" href="/profile" class="nav-btn">My Profile</a>
+          <a class="login" href="/login">Login</a> / 
+          <a class="login" href="/signup">Sign Up</a>
         <% } %>
-    </div>
-</nav>
+      </div>
+    </nav>
 
 
   <header>
-    <h1>Our Signature Services</h1>
+    <h1 class="reveal-text" id="serviceHeading">Our Signature Services</h1>
     <h5>WHERE SOPHISTICATION MEETS SKIN</h5>
   </header>
 
@@ -152,14 +445,115 @@
   <div class="section">
     <h2>Skin</h2>
     <div class="services-grid">
-      <div class="service-box"><img src="images/skin.jpg"><h3>Deep Cleansing</h3><p>Purify your skin with gentle exfoliation.</p></div>
-      <div class="service-box"><img src="images/facial.jpg"><h3>Glow Therapy</h3><p>Enhance radiance with organic ingredients.</p></div>
-      <div class="service-box"><img src="images/acnectrl.jpg"><h3>Acne Control</h3><p>Fight breakouts with professional care.</p></div>
-      <div class="service-box"><img src="images/hydra.jpg"><h3>Hydra Facial</h3><p>Deep hydration for youthful skin.</p></div>
-      <div class="service-box"><img src="images/skinPolishing.jpg"><h3>Skin Polishing</h3><p>Removes tan and evens skin tone.</p></div>
-      <div class="service-box"><img src="images/led.jpg"><h3>LED Light Therapy</h3><p>Rejuvenates skin & reduces fine lines.</p></div>
-      <div class="service-box"><img src="images/Brightening.jpg"><h3>Brightening Peel</h3><p>Boost glow with fruit-based enzymes.</p></div>
-      <div class="service-box"><img src="images/luxury.jpg"><h3>Luxury Facial</h3><p>Indulgent care for glowing skin.</p></div>
+      <div class="service-box">
+        <img src="images/skin.jpg">
+        <h3>Deep Cleansing</h3>
+        <div class="rating">⭐⭐⭐⭐⭐</div>
+        <p>Purify your skin with gentle exfoliation.</p>
+        <div class="service-overlay">
+          <h4>Deep Cleansing</h4>
+          <p>Remove impurities and dead skin cells for a fresh look.</p>
+          <div class="details">Duration: 45 mins | Price: ₹899</div>
+          <button class="book-btn" onclick="location.href='/booknow'">Book Now</button>
+        </div>
+      </div>
+      <div class="service-box">
+        <img src="images/facial.jpg">
+        <h3>Glow Therapy</h3>
+        <div class="rating">⭐⭐⭐⭐</div>
+        <p>Enhance radiance with organic ingredients.</p>
+        <div class="service-overlay">
+          <h4>Glow Therapy</h4>
+          <p>Get that instant shine with our natural glow treatment.</p>
+          <div class="details">Duration: 60 mins | Price: ₹1299</div>
+          <button class="book-btn" onclick="location.href='/booknow'">Book Now</button>
+        </div>
+      </div>
+      <div class="service-box">
+        <img src="images/acnectrl.jpg">
+        <h3>Acne Control</h3>
+        <div class="rating">⭐⭐⭐⭐⭐</div>
+        <p>Fight breakouts with professional care.</p>
+        <div class="service-overlay">
+          <h4>Acne Control</h4>
+          <p>Targeted treatment to clear acne and prevent scarring.</p>
+          <div class="details">Duration: 50 mins | Price: ₹1499</div>
+          <button class="book-btn" onclick="location.href='/booknow'">Book Now</button>
+        </div>
+      </div>
+      <div class="service-box">
+        <div class="service-badge">Most Booked 🔥</div>
+        <img src="images/hydra.jpg">
+        <h3>Hydra Facial</h3>
+        <div class="rating">⭐⭐⭐⭐⭐</div>
+        <p>Deep hydration for youthful skin.</p>
+        <div class="service-overlay">
+          <h4>Hydra Facial</h4>
+          <p>Advanced hydration technology for smooth, plump skin.</p>
+          <div class="details">Duration: 75 mins | Price: ₹2499</div>
+          <button class="book-btn" onclick="location.href='/booknow'">Book Now</button>
+        </div>
+      </div>
+      <div class="service-box">
+        <img src="images/skinPolishing.jpg">
+        <h3>Skin Polishing</h3>
+        <div class="rating">⭐⭐⭐⭐</div>
+        <p>Removes tan and evens skin tone.</p>
+        <div class="service-overlay">
+          <h4>Skin Polishing</h4>
+          <p>Exfoliate and brighten your skin for an even complexion.</p>
+          <div class="details">Duration: 60 mins | Price: ₹1899</div>
+          <button class="book-btn" onclick="location.href='/booknow'">Book Now</button>
+        </div>
+      </div>
+      <div class="service-box">
+        <img src="images/led.jpg">
+        <h3>LED Light Therapy</h3>
+        <div class="rating">⭐⭐⭐⭐⭐</div>
+        <p>Rejuvenates skin & reduces fine lines.</p>
+        <div class="service-overlay">
+          <h4>LED Therapy</h4>
+          <p>Non-invasive light treatment for aging and repair.</p>
+          <div class="details">Duration: 30 mins | Price: ₹999</div>
+          <button class="book-btn" onclick="location.href='/booknow'">Book Now</button>
+        </div>
+      </div>
+      <div class="service-box">
+        <img src="images/Brightening.jpg">
+        <h3>Brightening Peel</h3>
+        <div class="rating">⭐⭐⭐⭐</div>
+        <p>Boost glow with fruit-based enzymes.</p>
+        <div class="service-overlay">
+          <h4>Brightening Peel</h4>
+          <p>Natural fruit enzymes to peel away dullness.</p>
+          <div class="details">Duration: 40 mins | Price: ₹1199</div>
+          <button class="book-btn" onclick="location.href='/booknow'">Book Now</button>
+        </div>
+      </div>
+      <div class="service-box">
+        <img src="images/luxury.jpg">
+        <h3>Luxury Facial</h3>
+        <div class="rating">⭐⭐⭐⭐⭐</div>
+        <p>Indulgent care for glowing skin.</p>
+        <div class="service-overlay">
+          <h4>Luxury Facial</h4>
+          <p>Premium ingredients for a truly royal experience.</p>
+          <div class="details">Duration: 90 mins | Price: ₹3499</div>
+          <button class="book-btn" onclick="location.href='/booknow'">Book Now</button>
+        </div>
+      </div>
+    </div>
+    <!-- 📝 Skin Questionnaire -->
+    <div class="questionnaire-card">
+      <h4>✨ Tell us about your Skin Interests</h4>
+      <p>What is your primary skin concern today?</p>
+      <div class="options">
+        <input type="radio" name="skin_q" id="skin_1"><label for="skin_1">Acne & Breakouts</label>
+        <input type="radio" name="skin_q" id="skin_2"><label for="skin_2">Anti-Aging</label>
+        <input type="radio" name="skin_q" id="skin_3"><label for="skin_3">Dullness / Glow</label>
+        <input type="radio" name="skin_q" id="skin_4"><label for="skin_4">Dryness / Hydration</label>
+      </div>
+      <button class="submit-consult" onclick="location.href='/consultation?type=skin'">Get Expert Advice</button>
     </div>
   </div>
 
@@ -167,14 +561,115 @@
   <div class="section">
     <h2>Hair</h2>
     <div class="services-grid">
-      <div class="service-box"><img src="images/haircut.jpg"><h3>Haircut</h3><p>Customized cuts for every face shape.</p></div>
-      <div class="service-box"><img src="images/keratin.jpg"><h3>Keratin Treatment</h3><p>Frizz-free and shiny smooth hair.</p></div>
-      <div class="service-box"><img src="images/scalp.jpg"><h3>Hair Spa</h3><p>Nourishing therapy for healthy hair.</p></div>
-      <div class="service-box"><img src="images/hairColouring.jpg"><h3>Global Coloring</h3><p>Vibrant and lasting hair color.</p></div>
-      <div class="service-box"><img src="images/highlights.jpg"><h3>Highlights</h3><p>Subtle or bold highlights to match your style.</p></div>
-      <div class="service-box"><img src="images/hairStraightening.jpg"><h3>Hair Straightening</h3><p>Get silky, smooth, straight hair.</p></div>
-      <div class="service-box"><img src="images/hairCurling.jpg"><h3>Hair Curling</h3><p>Soft waves or tight curls – your choice!</p></div>
-      <div class="service-box"><img src="images/hair.jpg"><h3>Scalp Treatment</h3><p>Strengthens roots and reduces dandruff.</p></div>
+      <div class="service-box">
+        <img src="images/haircut.jpg">
+        <h3>Haircut</h3>
+        <div class="rating">⭐⭐⭐⭐⭐</div>
+        <p>Customized cuts for every face shape.</p>
+        <div class="service-overlay">
+          <h4>Haircut</h4>
+          <p>Professional styling to suit your unique features.</p>
+          <div class="details">Price: ₹499 - ₹1499</div>
+          <button class="book-btn" onclick="location.href='/booknow'">Book Now</button>
+        </div>
+      </div>
+      <div class="service-box">
+        <div class="service-badge">Most Widely Used ✨</div>
+        <img src="images/keratin.jpg">
+        <h3>Keratin Treatment</h3>
+        <div class="rating">⭐⭐⭐⭐⭐</div>
+        <p>Frizz-free and shiny smooth hair.</p>
+        <div class="service-overlay">
+          <h4>Keratin</h4>
+          <p>Long-lasting protein treatment for silky hair.</p>
+          <div class="details">Price: Starts at ₹3999</div>
+          <button class="book-btn" onclick="location.href='/booknow'">Book Now</button>
+        </div>
+      </div>
+      <div class="service-box">
+        <img src="images/scalp.jpg">
+        <h3>Hair Spa</h3>
+        <div class="rating">⭐⭐⭐⭐</div>
+        <p>Nourishing therapy for healthy hair.</p>
+        <div class="service-overlay">
+          <h4>Hair Spa</h4>
+          <p>Deep conditioning to revitalize your tresses.</p>
+          <div class="details">Duration: 60 mins | Price: ₹1299</div>
+          <button class="book-btn" onclick="location.href='/booknow'">Book Now</button>
+        </div>
+      </div>
+      <div class="service-box">
+        <img src="images/hairColouring.jpg">
+        <h3>Global Coloring</h3>
+        <div class="rating">⭐⭐⭐⭐⭐</div>
+        <p>Vibrant and lasting hair color.</p>
+        <div class="service-overlay">
+          <h4>Global Color</h4>
+          <p>Premium hair colors for a bold new look.</p>
+          <div class="details">Price: Starts at ₹2499</div>
+          <button class="book-btn" onclick="location.href='/booknow'">Book Now</button>
+        </div>
+      </div>
+      <div class="service-box">
+        <img src="images/highlights.jpg">
+        <h3>Highlights</h3>
+        <div class="rating">⭐⭐⭐⭐</div>
+        <p>Subtle or bold highlights to match your style.</p>
+        <div class="service-overlay">
+          <h4>Highlights</h4>
+          <p>Add dimension and shine to your hair.</p>
+          <div class="details">Price: Starts at ₹1999</div>
+          <button class="book-btn" onclick="location.href='/booknow'">Book Now</button>
+        </div>
+      </div>
+      <div class="service-box">
+        <img src="images/hairStraightening.jpg">
+        <h3>Hair Straightening</h3>
+        <div class="rating">⭐⭐⭐⭐⭐</div>
+        <p>Get silky, smooth, straight hair.</p>
+        <div class="service-overlay">
+          <h4>Straightening</h4>
+          <p>Permanent or temporary smoothing options.</p>
+          <div class="details">Price: Starts at ₹4999</div>
+          <button class="book-btn" onclick="location.href='/booknow'">Book Now</button>
+        </div>
+      </div>
+      <div class="service-box">
+        <img src="images/hairCurling.jpg">
+        <h3>Hair Curling</h3>
+        <div class="rating">⭐⭐⭐⭐</div>
+        <p>Soft waves or tight curls – your choice!</p>
+        <div class="service-overlay">
+          <h4>Hair Curling</h4>
+          <p>Perfect curls for special occasions.</p>
+          <div class="details">Price: Starts at ₹999</div>
+          <button class="book-btn" onclick="location.href='/booknow'">Book Now</button>
+        </div>
+      </div>
+      <div class="service-box">
+        <img src="images/hair.jpg">
+        <h3>Scalp Treatment</h3>
+        <div class="rating">⭐⭐⭐⭐⭐</div>
+        <p>Strengthens roots and reduces dandruff.</p>
+        <div class="service-overlay">
+          <h4>Scalp Care</h4>
+          <p>Targeted therapy for a healthy scalp environment.</p>
+          <div class="details">Duration: 45 mins | Price: ₹1199</div>
+          <button class="book-btn" onclick="location.href='/booknow'">Book Now</button>
+        </div>
+      </div>
+    </div>
+    <!-- 📝 Hair Questionnaire -->
+    <div class="questionnaire-card">
+      <h4>✨ What's your Hair Goal?</h4>
+      <p>How can we help your tresses look their best?</p>
+      <div class="options">
+        <input type="radio" name="hair_q" id="hair_1"><label for="hair_1">Deep Conditioning</label>
+        <input type="radio" name="hair_q" id="hair_2"><label for="hair_2">Frizz Control</label>
+        <input type="radio" name="hair_q" id="hair_3"><label for="hair_3">Hair Fall Control</label>
+        <input type="radio" name="hair_q" id="hair_4"><label for="hair_4">Color Protection</label>
+      </div>
+      <button class="submit-consult" onclick="location.href='/consultation?type=hair'">Get Expert Advice</button>
     </div>
   </div>
 
@@ -182,14 +677,108 @@
   <div class="section">
     <h2>Facials</h2>
     <div class="services-grid">
-      <div class="service-box"><img src="images/goldFacial.jpg"><h3>Gold Facial</h3><p>Luxury facial for instant radiance.</p></div>
-      <div class="service-box"><img src="images/diamond.jpg"><h3>Diamond Facial</h3><p>Brightens and firms your skin.</p></div>
-      <div class="service-box"><img src="images/fruitFacial.jpg"><h3>Fruit Facial</h3><p>Gentle, refreshing glow facial.</p></div>
-      <div class="service-box"><img src="images/oxy.jpg"><h3>Oxy Facial</h3><p>Infuses oxygen for vibrant skin.</p></div>
-      <div class="service-box"><img src="images/collagen.jpg"><h3>Collagen Boost</h3><p>Restores elasticity and firmness.</p></div>
-      <div class="service-box"><img src="images/detox.jpg"><h3>Detox Facial</h3><p>Removes toxins for clear skin.</p></div>
-      <div class="service-box"><img src="images/antiPig.jpg"><h3>Anti-Pigmentation</h3><p>Targets dark spots & discoloration.</p></div>
-      <div class="service-box"><img src="images/hydMask.jpg"><h3>Hydrating Mask</h3><p>Intense moisture boost therapy.</p></div>
+      <div class="service-box">
+        <div class="service-badge">Most Booked 🔥</div>
+        <img src="images/goldFacial.jpg">
+        <h3>Gold Facial</h3>
+        <div class="rating">⭐⭐⭐⭐⭐</div>
+        <p>Luxury facial for instant radiance.</p>
+        <div class="service-overlay">
+          <h4>Gold Facial</h4>
+          <p>Pure 24K gold leaves for an unmatched glow.</p>
+          <div class="details">Duration: 75 mins | Price: ₹2999</div>
+          <button class="book-btn" onclick="location.href='/booknow'">Book Now</button>
+        </div>
+      </div>
+      <div class="service-box">
+        <img src="images/diamond.jpg">
+        <h3>Diamond Facial</h3>
+        <p>Brightens and firms your skin.</p>
+        <div class="service-overlay">
+          <h4>Diamond Facial</h4>
+          <p>Exfoliate with diamond dust for polished skin.</p>
+          <div class="details">Duration: 70 mins | Price: ₹2499</div>
+          <button class="book-btn" onclick="location.href='/booknow'">Book Now</button>
+        </div>
+      </div>
+      <div class="service-box">
+        <img src="images/fruitFacial.jpg">
+        <h3>Fruit Facial</h3>
+        <p>Gentle, refreshing glow facial.</p>
+        <div class="service-overlay">
+          <h4>Fruit Facial</h4>
+          <p>Natural fruit extracts for sensitive skin.</p>
+          <div class="details">Duration: 50 mins | Price: ₹999</div>
+          <button class="book-btn" onclick="location.href='/booknow'">Book Now</button>
+        </div>
+      </div>
+      <div class="service-box">
+        <img src="images/oxy.jpg">
+        <h3>Oxy Facial</h3>
+        <p>Infuses oxygen for vibrant skin.</p>
+        <div class="service-overlay">
+          <h4>Oxy Facial</h4>
+          <p>Breathe life into your skin with oxygen therapy.</p>
+          <div class="details">Duration: 60 mins | Price: ₹1599</div>
+          <button class="book-btn" onclick="location.href='/booknow'">Book Now</button>
+        </div>
+      </div>
+      <div class="service-box">
+        <img src="images/collagen.jpg">
+        <h3>Collagen Boost</h3>
+        <p>Restores elasticity and firmness.</p>
+        <div class="service-overlay">
+          <h4>Collagen Boost</h4>
+          <p>Anti-aging treatment to firm up your skin.</p>
+          <div class="details">Duration: 80 mins | Price: ₹2199</div>
+          <button class="book-btn" onclick="location.href='/booknow'">Book Now</button>
+        </div>
+      </div>
+      <div class="service-box">
+        <img src="images/detox.jpg">
+        <h3>Detox Facial</h3>
+        <p>Removes toxins for clear skin.</p>
+        <div class="service-overlay">
+          <h4>Detox Facial</h4>
+          <p>Deep clean and detoxify from urban pollution.</p>
+          <div class="details">Duration: 60 mins | Price: ₹1399</div>
+          <button class="book-btn" onclick="location.href='/booknow'">Book Now</button>
+        </div>
+      </div>
+      <div class="service-box">
+        <img src="images/antiPig.jpg">
+        <h3>Anti-Pigmentation</h3>
+        <p>Targets dark spots & discoloration.</p>
+        <div class="service-overlay">
+          <h4>Anti-Pigment</h4>
+          <p>Even out your skin tone and fade spots.</p>
+          <div class="details">Duration: 65 mins | Price: ₹1799</div>
+          <button class="book-btn" onclick="location.href='/booknow'">Book Now</button>
+        </div>
+      </div>
+      <div class="service-box">
+        <img src="images/hydMask.jpg">
+        <h3>Hydrating Mask</h3>
+        <p>Intense moisture boost therapy.</p>
+        <div class="service-overlay">
+          <h4>Hydrating Mask</h4>
+          <p>Quench your skin's thirst with intense hydration.</p>
+          <div class="details">Duration: 40 mins | Price: ₹799</div>
+          <button class="book-btn" onclick="location.href='/booknow'">Book Now</button>
+        </div>
+      </div>
+    </div>
+    <!-- 📝 Facials Questionnaire -->
+    <div class="questionnaire-card">
+      <h4>✨ Facial & Glow Interests</h4>
+      <p>How often do you indulge in a professional facial?</p>
+      <div class="options">
+        <input type="radio" name="facial_q" id="facial_1"><label for="facial_1">Monthly Routine</label>
+        <input type="radio" name="facial_q" id="facial_2"><label for="facial_2">Special Occasions</label>
+        <input type="radio" name="facial_q" id="facial_3"><label for="facial_3">First Time Ever</label>
+        <input type="radio" name="facial_q" id="facial_4"><label for="facial_4">When Skin Feels Dull</label>
+      </div>
+      <button class="submit-consult" onclick="location.href='/consultation?type=facials'">Get Expert Advice</button>
     </div>
   </div>
 
@@ -197,14 +786,108 @@
   <div class="section">
     <h2>Makeup</h2>
     <div class="services-grid">
-      <div class="service-box"><img src="images/makeover.jpg"><h3>Bridal Makeup</h3><p>Elegant look for your big day.</p></div>
-      <div class="service-box"><img src="images/party-makeover.jpg"><h3>Party Makeup</h3><p>Glam up for any event.</p></div>
-      <div class="service-box"><img src="images/engMakeup.jpg"><h3>Engagement Makeup</h3><p>Soft glow with natural tones.</p></div>
-      <div class="service-box"><img src="images/hd.jpg"><h3>HD Makeup</h3><p>Flawless finish for photoshoots.</p></div>
-      <div class="service-box"><img src="images/airBrush.jpg"><h3>Airbrush Makeup</h3><p>Long-lasting and picture-perfect.</p></div>
-      <div class="service-box"><img src="images/everDay.jpg"><h3>Everyday Look</h3><p>Subtle and elegant daily makeup.</p></div>
-      <div class="service-box"><img src="images/eyeMakeup.jpg"><h3>Eye Makeup</h3><p>Smoky, bold, or soft – your style.</p></div>
-      <div class="service-box"><img src="images/makeConst.jpg"><h3>Makeup Consultation</h3><p>Expert advice on shades & products.</p></div>
+      <div class="service-box">
+        <div class="service-badge">Most Widely Used ✨</div>
+        <img src="images/makeover.jpg">
+        <h3>Bridal Makeup</h3>
+        <div class="rating">⭐⭐⭐⭐⭐</div>
+        <p>Elegant look for your big day.</p>
+        <div class="service-overlay">
+          <h4>Bridal Makeup</h4>
+          <p>Specialized bridal styling for a timeless look.</p>
+          <div class="details">Price: Starts at ₹9999</div>
+          <button class="book-btn" onclick="location.href='/booknow'">Book Now</button>
+        </div>
+      </div>
+      <div class="service-box">
+        <img src="images/party-makeover.jpg">
+        <h3>Party Makeup</h3>
+        <p>Glam up for any event.</p>
+        <div class="service-overlay">
+          <h4>Party Makeup</h4>
+          <p>Stand out in the crowd with stunning makeup.</p>
+          <div class="details">Price: ₹1999 - ₹4999</div>
+          <button class="book-btn" onclick="location.href='/booknow'">Book Now</button>
+        </div>
+      </div>
+      <div class="service-box">
+        <img src="images/engMakeup.jpg">
+        <h3>Engagement Makeup</h3>
+        <p>Soft glow with natural tones.</p>
+        <div class="service-overlay">
+          <h4>Engagement</h4>
+          <p>Perfect balance of glam and natural beauty.</p>
+          <div class="details">Price: Starts at ₹5999</div>
+          <button class="book-btn" onclick="location.href='/booknow'">Book Now</button>
+        </div>
+      </div>
+      <div class="service-box">
+        <img src="images/hd.jpg">
+        <h3>HD Makeup</h3>
+        <p>Flawless finish for photoshoots.</p>
+        <div class="service-overlay">
+          <h4>HD Makeup</h4>
+          <p>Camera-ready makeup for high definition clarity.</p>
+          <div class="details">Price: Starts at ₹3499</div>
+          <button class="book-btn" onclick="location.href='/booknow'">Book Now</button>
+        </div>
+      </div>
+      <div class="service-box">
+        <img src="images/airBrush.jpg">
+        <h3>Airbrush Makeup</h3>
+        <p>Long-lasting and picture-perfect.</p>
+        <div class="service-overlay">
+          <h4>Airbrush</h4>
+          <p>Smooth, long-wearing and lightweight finish.</p>
+          <div class="details">Price: Starts at ₹4499</div>
+          <button class="book-btn" onclick="location.href='/booknow'">Book Now</button>
+        </div>
+      </div>
+      <div class="service-box">
+        <img src="images/everDay.jpg">
+        <h3>Everyday Look</h3>
+        <p>Subtle and elegant daily makeup.</p>
+        <div class="service-overlay">
+          <h4>Everyday Look</h4>
+          <p>Enhance your natural features for daily elegance.</p>
+          <div class="details">Price: ₹999 - ₹1999</div>
+          <button class="book-btn" onclick="location.href='/booknow'">Book Now</button>
+        </div>
+      </div>
+      <div class="service-box">
+        <img src="images/eyeMakeup.jpg">
+        <h3>Eye Makeup</h3>
+        <p>Smoky, bold, or soft – your style.</p>
+        <div class="service-overlay">
+          <h4>Eye Makeup</h4>
+          <p>Specialized eye styling from smokey to cat-eye.</p>
+          <div class="details">Price: ₹499 - ₹999</div>
+          <button class="book-btn" onclick="location.href='/booknow'">Book Now</button>
+        </div>
+      </div>
+      <div class="service-box">
+        <img src="images/makeConst.jpg">
+        <h3>Makeup Consultation</h3>
+        <p>Expert advice on shades & products.</p>
+        <div class="service-overlay">
+          <h4>Consultation</h4>
+          <p>Find your perfect products and shades with experts.</p>
+          <div class="details">Price: ₹499 (Redeemable)</div>
+          <button class="book-btn" onclick="location.href='/booknow'">Book Now</button>
+        </div>
+      </div>
+    </div>
+    <!-- 📝 Makeup Questionnaire -->
+    <div class="questionnaire-card">
+      <h4>✨ Your Preferred Makeup Style</h4>
+      <p>Which look defines you the best?</p>
+      <div class="options">
+        <input type="radio" name="makeup_q" id="makeup_1"><label for="makeup_1">Natural & Subtle</label>
+        <input type="radio" name="makeup_q" id="makeup_2"><label for="makeup_2">Bold & Glamorous</label>
+        <input type="radio" name="makeup_q" id="makeup_3"><label for="makeup_3">Classic Elegant</label>
+        <input type="radio" name="makeup_q" id="makeup_4"><label for="makeup_4">Experimental / Trendy</label>
+      </div>
+      <button class="submit-consult" onclick="location.href='/consultation?type=makeup'">Get Expert Advice</button>
     </div>
   </div>
 
@@ -212,14 +895,109 @@
   <div class="section">
     <h2>Nail Art</h2>
     <div class="services-grid">
-      <div class="service-box"><img src="images/nail.jpg"><h3>Gel Nail Art</h3><p>Long-lasting shine and style.</p></div>
-      <div class="service-box"><img src="images/nail-extension.jpg"><h3>Nail Extensions</h3><p>Perfectly sculpted & elegant nails.</p></div>
-      <div class="service-box"><img src="images/classicManicure.jpg"><h3>Classic Manicure</h3><p>Clean, nourished, healthy nails.</p></div>
-      <div class="service-box"><img src="images/frenchTip.jpg"><h3>French Tips</h3><p>Timeless and sophisticated look.</p></div>
-      <div class="service-box"><img src="images/3dNail.jpg"><h3>3D Nail Art</h3><p>Creative designs that pop.</p></div>
-      <div class="service-box"><img src="images/glitterNails.jpg"><h3>Glitter Nails</h3><p>Perfect sparkle for parties.</p></div>
-      <div class="service-box"><img src="images/cuticleCare.jpg"><h3>Cuticle Care</h3><p>Moisturize and smoothen cuticles.</p></div>
-      <div class="service-box"><img src="images/nailStic.jpg"><h3>Nail Stickers</h3><p>Trendy designs made easy.</p></div>
+      <div class="service-box">
+        <img src="images/nail.jpg">
+        <h3>Gel Nail Art</h3>
+        <div class="rating">⭐⭐⭐⭐</div>
+        <p>Long-lasting shine and style.</p>
+        <div class="service-overlay">
+          <h4>Gel Nail Art</h4>
+          <p>Tough, glossy finish that lasts for weeks.</p>
+          <div class="details">Price: Starts at ₹799</div>
+          <button class="book-btn" onclick="location.href='/booknow'">Book Now</button>
+        </div>
+      </div>
+      <div class="service-box">
+        <div class="service-badge">Most Booked 🔥</div>
+        <img src="images/nail-extension.jpg">
+        <h3>Nail Extensions</h3>
+        <div class="rating">⭐⭐⭐⭐⭐</div>
+        <p>Perfectly sculpted & elegant nails.</p>
+        <div class="service-overlay">
+          <h4>Extensions</h4>
+          <p>Get the length and shape you've always wanted.</p>
+          <div class="details">Price: Starts at ₹1499</div>
+          <button class="book-btn" onclick="location.href='/booknow'">Book Now</button>
+        </div>
+      </div>
+      <div class="service-box">
+        <img src="images/classicManicure.jpg">
+        <h3>Classic Manicure</h3>
+        <p>Clean, nourished, healthy nails.</p>
+        <div class="service-overlay">
+          <h4>Manicure</h4>
+          <p>Complete care for your hands and nails.</p>
+          <div class="details">Duration: 45 mins | Price: ₹599</div>
+          <button class="book-btn" onclick="location.href='/booknow'">Book Now</button>
+        </div>
+      </div>
+      <div class="service-box">
+        <img src="images/frenchTip.jpg">
+        <h3>French Tips</h3>
+        <p>Timeless and sophisticated look.</p>
+        <div class="service-overlay">
+          <h4>French Tips</h4>
+          <p>Classic white tips for an elegant finish.</p>
+          <div class="details">Price: Starts at ₹899</div>
+          <button class="book-btn" onclick="location.href='/booknow'">Book Now</button>
+        </div>
+      </div>
+      <div class="service-box">
+        <img src="images/3dNail.jpg">
+        <h3>3D Nail Art</h3>
+        <p>Creative designs that pop.</p>
+        <div class="service-overlay">
+          <h4>3D Nail Art</h4>
+          <p>Intricate designs for a standout manicure.</p>
+          <div class="details">Price: Starts at ₹1199</div>
+          <button class="book-btn" onclick="location.href='/booknow'">Book Now</button>
+        </div>
+      </div>
+      <div class="service-box">
+        <img src="images/glitterNails.jpg">
+        <h3>Glitter Nails</h3>
+        <p>Perfect sparkle for parties.</p>
+        <div class="service-overlay">
+          <h4>Glitter Nails</h4>
+          <p>Add some sparkle to your fingertips.</p>
+          <div class="details">Price: Starts at ₹699</div>
+          <button class="book-btn" onclick="location.href='/booknow'">Book Now</button>
+        </div>
+      </div>
+      <div class="service-box">
+        <img src="images/cuticleCare.jpg">
+        <h3>Cuticle Care</h3>
+        <p>Moisturize and smoothen cuticles.</p>
+        <div class="service-overlay">
+          <h4>Cuticle Care</h4>
+          <p>Nourishing treatment for healthy nail beds.</p>
+          <div class="details">Duration: 20 mins | Price: ₹399</div>
+          <button class="book-btn" onclick="location.href='/booknow'">Book Now</button>
+        </div>
+      </div>
+      <div class="service-box">
+        <img src="images/nailStic.jpg">
+        <h3>Nail Stickers</h3>
+        <p>Trendy designs made easy.</p>
+        <div class="service-overlay">
+          <h4>Nail Stickers</h4>
+          <p>Quick and stylish designs for any mood.</p>
+          <div class="details">Price: Starts at ₹299</div>
+          <button class="book-btn" onclick="location.href='/booknow'">Book Now</button>
+        </div>
+      </div>
+    </div>
+    <!-- 📝 Nail Art Questionnaire -->
+    <div class="questionnaire-card">
+      <h4>✨ Nail Art & Extensions</h4>
+      <p>What's your nail style preference?</p>
+      <div class="options">
+        <input type="radio" name="nail_q" id="nail_1"><label for="nail_1">Short & Minimal</label>
+        <input type="radio" name="nail_q" id="nail_2"><label for="nail_2">Medium Gel Polish</label>
+        <input type="radio" name="nail_q" id="nail_3"><label for="nail_3">Long Extensions</label>
+        <input type="radio" name="nail_q" id="nail_4"><label for="nail_4">3D & Creative Art</label>
+      </div>
+      <button class="submit-consult" onclick="location.href='/consultation?type=nail'">Get Expert Advice</button>
     </div>
   </div>
 
@@ -231,5 +1009,38 @@
     </p>
   </section>
 
+  <!-- 👋 Floating Expert Widget -->
+  <div class="floating-expert" onclick="location.href='/consultation'">
+    <div class="expert-bubble show-bubble" id="expertBubble">
+      Hey! I’m Glam Expert, your beauty buddy. Feel free to ask me anything, anytime. ✨
+    </div>
+    <div class="expert-avatar">
+      <img src="/expert_avatar.png?v=2" alt="Glam Expert">
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const heading = document.getElementById("serviceHeading");
+      if (heading) {
+        const text = heading.textContent;
+        heading.innerHTML = "";
+        [...text].forEach((char, i) => {
+          const span = document.createElement("span");
+          span.textContent = char === " " ? "\u00A0" : char;
+          span.style.animationDelay = `${i * 0.03}s`; // Quick effect
+          heading.appendChild(span);
+        });
+      }
+
+      // ✨ Auto-hide expert bubble after 5 seconds
+      const bubble = document.getElementById("expertBubble");
+      if (bubble) {
+        setTimeout(() => {
+          bubble.classList.remove("show-bubble");
+        }, 5000);
+      }
+    });
+  </script>
 </body>
 </html>

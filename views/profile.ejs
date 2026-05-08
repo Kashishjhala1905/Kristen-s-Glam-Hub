@@ -14,198 +14,413 @@
       margin: 0;
       font-family: Roboto, Arial;
       background: #fff8f5;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
     header {
       background: linear-gradient(90deg, #f3d1dc, #ffe0f0);
-      padding: 22px;
+      padding: 40px 20px;
       text-align: center;
     }
 
-    header h1 {
-      margin: 0;
+    /* 🎭 Heading Reveal Animation */
+    .reveal-text {
       font-family: "Edu AU VIC WA NT Arrows", cursive;
       font-size: 56px;
-      font-weight: 500;
-      color: transparent;
-      -webkit-text-stroke: 1.3px #5a2a55;
+      margin: 0;
+      color: #5a2a55;
+    }
+    .reveal-text span {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: revealLetter 0.05s forwards;
+    }
+    @keyframes revealLetter {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .sub-heading {
+      color: #5a2a55;
+      margin-top: 15px;
+      letter-spacing: 2px;
+      display: inline-block;
+      border: 1px solid #5a2a55;
+      padding: 8px 25px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: bold;
+      animation: slowFloat 3s ease-in-out infinite;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    @keyframes slowFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .main-layout {
+      display: flex;
+      flex: 1;
+      max-width: 1300px;
+      margin: 0 auto;
+      width: 100%;
+      align-items: stretch;
     }
 
     .container {
-      max-width: 1000px;
-      margin: 28px auto;
-      padding: 18px;
+      flex: 1;
+      padding: 30px;
+      min-width: 0;
     }
 
-    .profile-card {
+    /* 📱 Side Panel (Right) */
+    .side-panel {
+      width: 280px;
+      flex: 0 0 280px;
+      background: white;
+      border-left: 1px solid #eee;
+      padding: 30px 20px;
       display: flex;
-      gap: 18px;
-      background: #fff;
-      padding: 18px;
-      border-radius: 12px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+      flex-direction: column;
+      gap: 15px;
+      box-shadow: -5px 0 15px rgba(0,0,0,0.02);
     }
 
-    .avatar {
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      background: linear-gradient(45deg, #ffd6e8, #f3d1dc);
+    .side-panel h4 {
+      margin-top: 0;
+      color: #5a2a55;
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      border-bottom: 2px solid #f3d1dc;
+      padding-bottom: 10px;
+    }
+
+    .side-link {
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-size: 34px;
-      font-weight: bold;
+      gap: 12px;
+      padding: 12px 15px;
+      background: #fdf2f7;
       color: #5a2a55;
-    }
-
-    .links a {
-      display: inline-block;
-      margin-right: 12px;
-      margin-top: 8px;
-      padding: 8px 14px;
-      background: #ffe4ef;
-      color: #d63384;
-      border-radius: 8px;
+      border-radius: 10px;
       text-decoration: none;
-      border: 1px solid #d63384;
+      font-weight: 500;
+      transition: 0.3s;
     }
 
-    .links a:hover {
+    .side-link:hover {
       background: #d63384;
+      color: white;
+      transform: translateX(-5px);
+    }
+
+    .side-link.logout {
+      margin-top: auto;
+      background: #fff0f0;
+      color: #dc3545;
+      border: 1px solid #ffcccc;
+    }
+
+    .side-link.logout:hover {
+      background: #dc3545;
       color: white;
     }
 
-    .section {
-      margin-top: 35px;
+    .profile-card {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      margin-bottom: 40px;
+    }
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+      margin-bottom: 30px;
+    }
+
+    .avatar-wrapper {
+      position: relative;
+    }
+
+    .avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: #f3d1dc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      color: #5a2a55;
+      border: 4px solid white;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .section h3 {
       font-family: 'Playfair Display', serif;
       color: #d63384;
-      font-size: 26px;
+      font-size: 28px;
+      margin-bottom: 25px;
+    }
+
+    .appointment-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
     }
 
     .appointment-card {
       background: white;
-      padding: 15px;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      border-left: 5px solid #d63384;
+      transition: 0.3s;
+    }
+
+    .appointment-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .edit-profile-section {
+      display: none; /* Toggled via JS */
+      background: #fdf2f7;
+      padding: 25px;
+      border-radius: 15px;
+      margin-top: 20px;
+    }
+
+    .form-group {
       margin-bottom: 15px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.10);
     }
 
-    .appointment-card h4 {
-      margin: 0;
-      color: #d63384;
-      font-size: 20px;
-    }
-
-    .appointment-card p {
-      margin: 6px 0;
-    }
-
-    .edit-btn, .cancel-btn {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 8px 14px;
-      border-radius: 8px;
-      text-decoration: none;
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
       font-weight: 500;
     }
 
-    .edit-btn {
-      background: #d63384;
-      color: white;
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
     }
 
-    .edit-btn:hover {
-      background: #b1256b;
-    }
-
-    .cancel-btn {
-      background: #ffffff;
+    .edit-btn, .cancel-btn, .save-btn {
+      display: inline-block;
+      padding: 8px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 14px;
+      transition: 0.3s;
       border: 1px solid #d63384;
-      color: #d63384;
-      margin-left: 10px;
-    }
-
-    .cancel-btn:hover {
       background: #d63384;
       color: white;
+      cursor: pointer;
     }
 
+    .edit-btn:hover, .cancel-btn:hover, .save-btn:hover {
+      background: #b1256b;
+      border-color: #b1256b;
+      transform: translateY(-2px);
+    }
+
+    .nav-icons { display: flex; gap: 20px; align-items: center; }
+    .nav-icon-wrapper { position: relative; cursor: pointer; }
+    .nav-icon-wrapper:hover .tooltip { opacity: 1; visibility: visible; }
+    .tooltip {
+        position: absolute;
+        top: 110%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #333;
+        color: #fff;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 11px;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transition: 0.3s;
+        z-index: 100;
+    }
+    .nav-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #f3d1dc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: bold;
+      color: #5a2a55;
+      overflow: hidden;
+      border: 1px solid #d63384;
+    }
+    .nav-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+    @media (max-width: 820px) {
+      .main-layout {
+        flex-direction: column;
+      }
+
+      .side-panel {
+        width: auto;
+        flex-basis: auto;
+        border-left: 0;
+        border-top: 1px solid #eee;
+        box-shadow: 0 -5px 15px rgba(0,0,0,0.02);
+      }
+    }
   </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
 
   <header>
-    <h1>My Profile</h1>
+    <h1 class="reveal-text" id="profileHeading">My Profile</h1>
+    <div class="sub-heading">Finally remembered yourself 😊</div>
   </header>
 
-  <div class="container">
+  <div class="main-layout">
+    <div class="container">
+      <!-- PROFILE CARD -->
+      <div class="profile-card">
+        <div class="profile-header">
+          <div class="avatar">
+            <% if (user && user.photo) { %>
+              <img src="<%= user.photo %>" alt="Profile">
+            <% } else { %>
+              <%= user ? (user.name ? user.name.charAt(0).toUpperCase() : user.email.charAt(0).toUpperCase()) : 'U' %>
+            <% } %>
+          </div>
+          <div class="info">
+            <h2 style="margin:0; font-family:'Playfair Display', serif;"><%= user ? (user.name || 'Glam User') : '' %></h2>
+            <p style="color:#666; margin:5px 0;"><i class="fas fa-envelope"></i> <%= user.email %></p>
+            <p style="color:#666; margin:5px 0;"><i class="fas fa-phone"></i> <%= user.contact || 'No contact added' %></p>
+          </div>
+        </div>
 
-    <!-- PROFILE CARD -->
-    <div class="profile-card">
-      <div class="avatar">
-        <%= user ? (user.name ? user.name.charAt(0).toUpperCase() : user.email.charAt(0).toUpperCase()) : 'U' %>
+        <div id="editProfileSection" class="edit-profile-section">
+          <h3>Edit Your Profile</h3>
+          <form action="/profile/update" method="POST" enctype="multipart/form-data">
+          <div class="form-group">
+            <label>Update Photo</label>
+            <input type="file" name="photo" accept="image/*">
+          </div>
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" name="name" value="<%= user.name %>" required>
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" name="email" value="<%= user.email %>" required>
+          </div>
+          <div class="form-group">
+            <label>Contact Number</label>
+            <input type="tel" name="contact" value="<%= user.contact %>" required>
+          </div>
+          <div style="margin-top:20px;">
+            <button type="submit" class="save-btn">Save Changes</button>
+            <button type="button" class="cancel-btn" onclick="toggleEdit()">Cancel</button>
+          </div>
+        </form>
       </div>
 
-      <div class="info">
-        <h2><%= user ? (user.name || user.email) : '' %></h2>
-        <p><strong>Email:</strong> <%= user.email %></p>
-        <p><strong>Contact:</strong> <%= user.contact %></p>
+      <!-- APPOINTMENTS -->
+      <div class="section">
+        <h3>Your Appointments</h3>
+        <% if (appointments.length === 0) { %>
+          <div class="appointment-card" style="text-align:center; border:none;">
+            <p>No appointments yet. <a href="/booknow" style="color:#d63384; font-weight:bold;">Start your beauty journey!</a></p>
+          </div>
+        <% } else { %>
+          <div class="appointment-grid">
+            <% appointments.forEach(a => { 
+                function formatDate(d) {
+                  return new Date(d).toLocaleDateString("en-IN", {
+                    day: "2-digit",
+                    month: "long",
+                    year: "numeric"
+                  });
+                }
+            %>
+              <div class="appointment-card">
+                <h4><%= a.name %></h4>
+                <p><b>📅 Date:</b> <%= formatDate(a.date) %></p>
+                <p><b>⏰ Time:</b> <%= a.time %></p>
+                <p><b>📍 Location:</b> <%= a.city %></p>
+                <div style="margin-top:20px; display:flex; gap:12px;">
+                  <a class="edit-btn" href="/booknow?edit=<%= a._id %>">Edit</a>
+                  <a class="cancel-btn" href="/appointment/delete/<%= a._id %>" onclick="return confirm('Cancel this appointment?')">Cancel</a>
+                </div>
+              </div>
+            <% }) %>
+          </div>
+        <% } %>
+      </div>
+    </div>
 
-        <div class="links">
-          <a href="/mycart">My Cart</a>
-          <a href="/orders">My Orders</a>
-          <a href="/logout">Logout</a>
-          <a href="/">Home</a>
+    <!-- 📱 SIDE PANEL (Right) -->
+    </div>
+    <div class="side-panel">
+      <h4>Glam Navigation</h4>
+      <a href="/" class="side-link"><i class="fas fa-home"></i> Home</a>
+      <a href="/orders" class="side-link"><i class="fas fa-box"></i> My Orders</a>
+      
+      <div class="side-link" style="padding:0; background:none;">
+        <div class="nav-icons" style="width:100%; gap:0;">
+          <a href="/wishlist" class="side-link" style="flex:1; margin:0;"><i class="fas fa-heart"></i> My Wishlist</a>
         </div>
       </div>
+      <div class="side-link" style="padding:0; background:none;">
+        <div class="nav-icons" style="width:100%; gap:0;">
+          <a href="/mycart" class="side-link" style="flex:1; margin:0;"><i class="fas fa-shopping-cart"></i> My Cart</a>
+        </div>
+      </div>
+
+      <a href="/booknow" class="side-link"><i class="fas fa-calendar-check"></i> Book Appointment</a>
+      <a href="javascript:void(0)" class="side-link" onclick="toggleEdit()"><i class="fas fa-user-edit"></i> Edit Profile</a>
+      <a href="/logout" class="side-link logout">Logout <i class="fas fa-arrow-right"></i></a>
     </div>
-
-    <!-- APPOINTMENTS -->
-    <div class="section">
-      <h3>Your Appointments</h3>
-
-      <% if (appointments.length === 0) { %>
-        <p>No appointments yet. <a href="/booknow" style="color:#d63384;">Book now</a></p>
-      <% } else { %>
-
-        <% appointments.forEach(a => { 
-            function formatDate(d) {
-              return new Date(d).toLocaleDateString("en-IN", {
-                day: "2-digit",
-                month: "long",
-                year: "numeric"
-              });
-            }
-        %>
-
-          <div class="appointment-card">
-            <h4><%= a.name %></h4>
-
-            <p><b>Date:</b> <%= formatDate(a.date) %></p>
-            <p><b>Time:</b> <%= a.time %></p>
-            <p><b>City:</b> <%= a.city %>, <%= a.state %></p>
-            <p><b>Contact:</b> <%= a.contact %></p>
-
-            <a class="edit-btn" href="/booknow?edit=<%= a._id %>">Edit Appointment</a>
-
-            <!-- CANCEL BUTTON -->
-            <a class="cancel-btn" href="/appointment/delete/<%= a._id %>" onclick="return confirm('Cancel this appointment?')">
-              Cancel
-            </a>
-
-          </div>
-
-        <% }) %>
-      <% } %>
-
-    </div>
-
   </div>
 
+  <script>
+    function toggleEdit() {
+      const section = document.getElementById('editProfileSection');
+      section.style.display = section.style.display === 'block' ? 'none' : 'block';
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const heading = document.getElementById("profileHeading");
+      if (heading) {
+        const text = heading.textContent;
+        heading.innerHTML = "";
+        [...text].forEach((char, i) => {
+          const span = document.createElement("span");
+          span.textContent = char === " " ? "\u00A0" : char;
+          span.style.animationDelay = `${i * 0.03}s`;
+          heading.appendChild(span);
+        });
+      }
+    });
+  </script>
 </body>
 </html>

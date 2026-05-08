@@ -17,6 +17,7 @@ const appointmentRoutes = require("./routes/appointmentRoutes");
 const cartRoutes = require("./routes/cartRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const addressRoutes = require("./routes/addressRoutes");
+const wishlistRoutes = require("./routes/wishlistRoutes");
 
 // ================= BASIC SETUP =================
 app.set("view engine", "ejs");
@@ -69,6 +70,7 @@ app.get("/", (req, res) => {
 
 app.get("/services", (req, res) => res.render("services"));
 app.get("/contact", (req, res) => res.render("contact"));
+app.get("/consultation", (req, res) => res.render("consultation"));
 
 app.get("/booknow", (req, res) => {
   const smsg = req.flash("success_msg");
@@ -172,6 +174,7 @@ app.use("/", appointmentRoutes);
 app.use("/", cartRoutes);   
 app.use("/", orderRoutes);
 app.use("/", addressRoutes);
+app.use("/", wishlistRoutes);
 
 
 // ERROR HANDLER
@@ -180,7 +183,7 @@ app.use((err, req, res, next) => {
   res.status(500).send("Something went wrong!");
 });
 
-const PORT = process.env.PORT || 4040;
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, () =>
-  console.log(`Server running at http://localhost:${PORT}`)
+  console.log(`Server running at port ${PORT}`)
 );

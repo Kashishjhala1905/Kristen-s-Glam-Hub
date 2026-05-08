@@ -8,10 +8,9 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto:wght@400;500;700&family=Edu+AU+VIC+WA+NT+Arrows:wght@400;700&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Playfair+Display&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Arrows:wght@400..700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
   <!-- Font Awesome -->
   <link
@@ -61,9 +60,44 @@
       transition: color 0.3s ease;
     }
 
-    nav ul li a:hover , .login:hover {
+    nav ul li a:hover, .login:hover {
       color: #d63384;
     }
+    .nav-icons { display: flex; gap: 20px; align-items: center; }
+    .nav-icon-wrapper { position: relative; cursor: pointer; }
+    .nav-icon-wrapper:hover .tooltip { opacity: 1; visibility: visible; }
+    .tooltip {
+        position: absolute;
+        top: 110%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #333;
+        color: #fff;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 11px;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transition: 0.3s;
+        z-index: 100;
+    }
+
+    .nav-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #f3d1dc;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        font-weight: bold;
+        color: #5a2a55;
+        overflow: hidden;
+        border: 1px solid #d63384;
+    }
+    .nav-avatar img { width: 100%; height: 100%; object-fit: cover; }
 
     main {
       flex: 1;
@@ -74,7 +108,7 @@
       font-family: "Edu AU VIC WA NT Arrows", cursive;
       font-size: 48px;
       margin: 30px 0 10px;
-      color: #d63384;
+      color: #5a2a55;
     }
 
     p {
@@ -135,38 +169,71 @@
     }
 
     /* Responsive adjustments */
-    @media screen and (max-width: 600px) {
-      h1 {
-        font-size: 32px;
+      @media screen and (max-width: 600px) {
+        h1 {
+          font-size: 32px;
+        }
       }
-    }
-  </style>
+
+      /* 🎭 Heading Reveal Animation */
+      .reveal-text span {
+        display: inline-block;
+        opacity: 0;
+        transform: translateY(10px);
+        animation: revealLetter 0.05s forwards;
+      }
+
+      @keyframes revealLetter {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
 </head>
 <body>
 
   <!-- 🌸 Navbar -->
-  <nav>
-    <ul>
+    <nav>
+      <ul>
         <li><a href="/">Home</a></li>
         <li><a href="/booknow">Book Now</a></li>
         <li><a href="/services">Services</a></li>
         <li><a href="/beautyproducts">Beauty Products</a></li>
         <li><a href="/contact">Contact</a></li>
-    </ul>
-
-    <div class="nav-right">
-        <% if (!user) { %>
-            <a class="login" href="/login" class="nav-btn">Login</a> / 
-            <a class="login" href="/signup" class="nav-btn">Sign Up</a>
-        <% } else { %>
-            <a class="login" href="/profile" class="nav-btn">My Profile</a>
-        <% } %>
-    </div>
-</nav>
+      </ul>
+      <div class="nav-right" style="display: flex; gap: 20px; align-items: center;">
+          <div class="nav-icons">
+              <% if (locals.user) { %>
+              <div class="nav-icon-wrapper" onclick="location.href='/wishlist'">
+                  <i class="fas fa-heart" style="color:#d63384; font-size:1.2em;"></i>
+                  <div class="tooltip">My Wishlist</div>
+              </div>
+              <div class="nav-icon-wrapper" onclick="location.href='/mycart'">
+                  <i class="fas fa-shopping-cart" style="color:#333; font-size:1.2em;"></i>
+                  <div class="tooltip">My Cart</div>
+              </div>
+              <div class="nav-icon-wrapper" onclick="location.href='/profile'">
+                <div class="nav-avatar">
+                  <% if (user.photo) { %>
+                    <img src="<%= user.photo %>" alt="Profile">
+                  <% } else { %>
+                    <%= user.name ? user.name.charAt(0).toUpperCase() : user.email.charAt(0).toUpperCase() %>
+                  <% } %>
+                </div>
+                <div class="tooltip">My Profile</div>
+              </div>
+              <% } else { %>
+                  <a class="login" href="/login">Login</a> / 
+                  <a class="login" href="/signup">Sign Up</a>
+              <% } %>
+          </div>
+      </div>
+    </nav>
 
 
   <main>
-    <h1>Welcome to Kristen's Glam Hub</h1>
+    <h1 class="reveal-text" id="contactHeading">Welcome to Kristen's Glam Hub</h1>
     <p>Your one-stop destination for all things beauty ✨</p>
   </main>
 
@@ -180,14 +247,28 @@
     </div>
 
     <div class="social-icons">
-      <a href="https://www.instagram.com/beautywebsite" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.instagram.com/kasshhiiisshhh" target="_blank"><i class="fab fa-instagram"></i></a>
       <a href="https://www.facebook.com/beautywebsite" target="_blank"><i class="fab fa-facebook-f"></i></a>
       <a href="https://wa.me/+918349439349" target="_blank"><i class="fab fa-whatsapp"></i></a>
-      <a href="https://www.snapchat.com/add/beautywebsite" target="_blank"><i class="fab fa-snapchat-ghost"></i></a>
-      <a href="https://www.pinterest.com/beautywebsite" target="_blank"><i class="fab fa-pinterest-p"></i></a>
+      <a href="https://www.snapchat.com/add/kash_ishhhsshs" target="_blank"><i class="fab fa-snapchat-ghost"></i></a>
     </div>
 
     <p>© 2025 Kristen's Glam Hub. All rights reserved.</p>
   </footer>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const heading = document.getElementById("contactHeading");
+      if (heading) {
+        const text = heading.textContent;
+        heading.innerHTML = "";
+        [...text].forEach((char, i) => {
+          const span = document.createElement("span");
+          span.textContent = char === " " ? "\u00A0" : char;
+          span.style.animationDelay = `${i * 0.03}s`; // Quick effect
+          heading.appendChild(span);
+        });
+      }
+    });
+  </script>
 </body>
 </html>
