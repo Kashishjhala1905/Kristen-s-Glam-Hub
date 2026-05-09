@@ -5,16 +5,40 @@ const User = require("../models/User");
 const requireLogin = require("../middlewares/authMiddleware");
 const multer = require("multer");
 const path = require("path");
+const fs = require("fs");
 
 // Configure Multer for photo uploads
+const uploadDir = path.join(__dirname, "..", "public", "uploads");
+fs.mkdirSync(uploadDir, { recursive: true });
+
 const storage = multer.diskStorage({
-  destination: "./public/uploads/",
+  destination: uploadDir,
   filename: function (req, file, cb) {
-    cb(null, "user-" + req.session.user._id + "-" + Date.now() + path.extname(file.originalname));
+    const ext = path.extname(file.originalname).toLowerCase();
+    cb(null, "user-" + req.session.user._id + "-" + Date.now() + ext);
   }
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({
+    storage,
+    limits: { fileSize: 2 * 1024 * 1024 },
+    fileFilter: (req, file, cb) => {
+        if (!file.mimetype.startsWith("image/")) {
+            return cb(new Error("Only image files can be uploaded."));
+        }
+        cb(null, true);
+    }
+});
+
+function sessionUser(user) {
+    return {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        contact: user.contact,
+        photo: user.photo
+    };
+}
 
 // PROFILE PAGE (Protected)
 router.get("/profile", requireLogin, async (req, res) => {
@@ -37,8 +61,7 @@ router.get("/profile", requireLogin, async (req, res) => {
     }
 });
 
-// UPDATE PROFILE
-router.post("/profile/update", requireLogin, upload.single("photo"), async (req, res) => {
+async function updateProfile(req, res) {
     try {
         const userId = req.session.user._id;
         const { name, email, contact } = req.body;
@@ -49,18 +72,40 @@ router.post("/profile/update", requireLogin, upload.single("photo"), async (req,
             updateData.photo = "/uploads/" + req.file.filename;
         }
 
-        const updatedUser = await User.findByIdAndUpdate(userId, updateData, { new: true });
+        const updatedUser = await User.findByIdAndUpdate(userId, updateData, {
+            new: true,
+            runValidators: true
+        });
         
         // Update session user
-        req.session.user = updatedUser;
+        req.session.user = sessionUser(updatedUser);
         
         req.flash("success_msg", "Profile updated successfully!");
         res.redirect("/profile");
     } catch (err) {
         console.log(err);
-        req.flash("error_msg", "Error updating profile.");
+        const message = err.code === 11000
+            ? "That email or contact number is already used by another account."
+            : "Error updating profile.";
+        req.flash("error_msg", message);
         res.redirect("/profile");
     }
+}
+
+// UPDATE PROFILE
+router.post("/profile/update", requireLogin, (req, res, next) => {
+    upload.single("photo")(req, res, (err) => {
+        if (err) {
+            console.log("PROFILE PHOTO UPLOAD ERROR:", err);
+            const message = err instanceof multer.MulterError && err.code === "LIMIT_FILE_SIZE"
+                ? "Profile photo must be smaller than 2MB."
+                : err.message || "Error uploading profile photo.";
+            req.flash("error_msg", message);
+            return res.redirect("/profile");
+        }
+
+        updateProfile(req, res).catch(next);
+    });
 });
 
 module.exports = router;
