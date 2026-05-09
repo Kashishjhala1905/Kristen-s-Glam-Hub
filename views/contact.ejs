@@ -84,8 +84,10 @@
     <h1 class="reveal-text" id="contactHeading">Welcome to Kristen's Glam Hub</h1>
     <p>Your one-stop destination for all things beauty ✨</p>
   </main>
-    <% const successMessages = Array.isArray(success_msg) ? success_msg : (success_msg ? [success_msg] : []); %>
-    <% const errorMessages = Array.isArray(error_msg) ? error_msg : (error_msg ? [error_msg] : []); %>
+      <% const contactSuccess = locals.success_msg || ""; %>
+    <% const contactError = locals.error_msg || ""; %>
+    <% const successMessages = Array.isArray(contactSuccess) ? contactSuccess : (contactSuccess ? [contactSuccess] : []); %>
+    <% const errorMessages = Array.isArray(contactError) ? contactError : (contactError ? [contactError] : []); %>
     <% if (successMessages.length) { %>
       <div class="alert alert-success"><%= successMessages[0] %></div>
     <% } %>
