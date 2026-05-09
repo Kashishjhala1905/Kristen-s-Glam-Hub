@@ -1,7 +1,11 @@
+const crypto = require("crypto");
 const User = require("../models/User");
 const CartItem = require("../models/CartItem");
 const bcrypt = require("bcryptjs");
-const { sendOTP } = require("../utils/mailer");
+const {
+  sendOTP,
+  sendResetPasswordMail
+} = require("../utils/mailer");
 
 /* ======================
    OTP GENERATOR
@@ -367,3 +371,127 @@ exports.resendSignupOTP = async (req, res) => {
 exports.verifyEmail = (req, res) => {
   res.render("verifyEmail", { error: null });
 };
+
+exports.showForgotPassword = (req, res) => {
+  res.render("forgotPassword", {
+    error: null,
+    success: null
+  });
+};
+
+exports.sendResetLink = async (req, res) => {
+
+  try {
+
+    const { email } = req.body;
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+
+      return res.render("forgotPassword", {
+        error: "No account found with this email",
+        success: null
+      });
+    }
+
+    // ✅ CREATE RESET TOKEN
+    const token = crypto
+      .randomBytes(32)
+      .toString("hex");
+
+    // ✅ SAVE TOKEN + EXPIRY
+    user.resetPasswordToken = token;
+
+    user.resetPasswordExpiry =
+      Date.now() + 15 * 60 * 1000;
+
+    await user.save();
+
+    // ✅ CREATE RESET LINK
+    const resetLink =
+      `${req.protocol}://${req.get("host")}/reset-password/${token}`;
+
+    // ✅ SEND RESET MAIL
+    await sendResetPasswordMail(
+      user.email,
+      resetLink
+    );
+
+    return res.render("forgotPassword", {
+      error: null,
+      success:
+        "Password reset link sent to your email"
+    });
+
+  } catch (err) {
+
+    console.log(
+      "FORGOT PASSWORD ERROR:",
+      err
+    );
+
+    return res.render("forgotPassword", {
+      error: "Something went wrong",
+      success: null
+    });
+  }
+};
+
+exports.showResetPassword = async (req, res) => {
+
+  const user = await User.findOne({
+    resetPasswordToken: req.params.token,
+    resetPasswordExpiry: { $gt: Date.now() }
+  });
+
+  if (!user) {
+    return res.send("Invalid or expired reset link");
+  }
+
+  res.render("resetPassword", {
+    token: req.params.token,
+    error: null
+  });
+};
+
+exports.resetPassword = async (req, res) => {
+
+  try {
+
+    const { password } = req.body;
+
+    const user = await User.findOne({
+      resetPasswordToken: req.params.token,
+      resetPasswordExpiry: { $gt: Date.now() }
+    });
+
+    if (!user) {
+      return res.send("Reset link expired");
+    }
+
+    const hashedPassword =
+      await bcrypt.hash(password, 10);
+
+    user.password = hashedPassword;
+
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpiry = undefined;
+
+    await user.save();
+
+    req.flash(
+      "success_msg",
+      "Password reset successful. Please login."
+    );
+
+    res.redirect("/login");
+
+  } catch (err) {
+
+    console.log("RESET PASSWORD ERROR:", err);
+
+    res.send("Something went wrong");
+  }
+};
+
