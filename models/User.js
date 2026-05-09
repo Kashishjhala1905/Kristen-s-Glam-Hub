@@ -40,8 +40,8 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model("User", userSchema);
 
-<<<<<<< HEAD
+
 module.exports = User;
-=======
+
 module.exports = User;
->>>>>>> 2382cff23145de8f6e596c03b9800ab760b84f04
+
