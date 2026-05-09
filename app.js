@@ -8,6 +8,7 @@ const flash = require("connect-flash");
 const fs = require("fs");
 
 const Appointment = require("./models/Appointment");
+const User = require("./models/User");
 
 const app = express();
 // ROUTES
@@ -55,10 +56,30 @@ app.use(
 
 app.use(flash());
 
-// Make user available everywhere
-app.use((req, res, next) => {
-  res.locals.user = req.session.user || null;
-  next();
+// Make fresh user data available everywhere, including updated profile photos.
+app.use(async (req, res, next) => {
+  try {
+    if (!req.session.user?._id) {
+      res.locals.user = null;
+      return next();
+    }
+
+    const freshUser = await User.findById(req.session.user._id)
+      .select("name email contact photo")
+      .lean();
+
+    if (!freshUser) {
+      req.session.user = null;
+      res.locals.user = null;
+      return next();
+    }
+
+    req.session.user = freshUser;
+    res.locals.user = freshUser;
+    next();
+  } catch (err) {
+    next(err);
+  }
 });
 
 // PAGES
