@@ -1,274 +1,102 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kristen's Glam Hub</title>
 
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Playfair+Display&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Arrows:wght@400..700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
-  <!-- Font Awesome -->
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    crossorigin="anonymous"
-  />
-
-  <style>
-    body {
-      font-family: 'Roboto', sans-serif;
-      background: linear-gradient(135deg, #fff4f4, #ffe2f0);
-      margin: 0;
-      padding: 0;
-      text-align: center;
-      color: #333;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* 🌸 Navbar (same as services.ejs) */
-    nav {
-      background-color: #ffffff;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 40px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 25px;
-      margin: 0;
-      padding: 0;
-    }
-
-    nav ul li a, .login {
-      text-decoration: none;
-      color: #333;
-      font-weight: 600;
-      transition: color 0.3s ease;
-    }
-
-    nav ul li a:hover, .login:hover {
-      color: #d63384;
-    }
-    .nav-icons { display: flex; gap: 20px; align-items: center; }
-    .nav-icon-wrapper { position: relative; cursor: pointer; }
-    .nav-icon-wrapper:hover .tooltip { opacity: 1; visibility: visible; }
-    .tooltip {
-        position: absolute;
-        top: 110%;
-        left: 50%;
-        transform: translateX(-50%);
-        background: #333;
-        color: #fff;
-        padding: 5px 10px;
-        border-radius: 4px;
-        font-size: 11px;
-        white-space: nowrap;
-        opacity: 0;
-        visibility: hidden;
-        transition: 0.3s;
-        z-index: 100;
-    }
-
-    .nav-avatar {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        background: #f3d1dc;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 14px;
-        font-weight: bold;
-        color: #5a2a55;
-        overflow: hidden;
-        border: 1px solid #d63384;
-    }
-    .nav-avatar img { width: 100%; height: 100%; object-fit: cover; }
-
-    main {
-      flex: 1;
-      padding: 20px;
-    }
-
-    h1 {
-      font-family: "Edu AU VIC WA NT Arrows", cursive;
-      font-size: 48px;
-      margin: 30px 0 10px;
-      color: #5a2a55;
-    }
-
-    p {
-      font-size: 20px;
-      margin: 10px 0;
-    }
-
-    footer {
-      background-color: #fff0f5;
-      padding: 20px;
-      border-top: 3px solid #d63384;
-      box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.05);
-    }
-
-    footer a {
-      color: #d63384;
-      margin: 0 8px;
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s ease;
-    }
-
-    footer a:hover {
-      color: #a61e61;
-    }
-
-    .social-icons {
-      margin: 20px 0;
-      font-size: 26px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
-    }
-
-    .social-icons a {
-      color: #d63384;
-      transition: color 0.3s;
-    }
-
-    .social-icons a:hover {
-      color: #a61e61;
-    }
-
-    .contact-punchlines {
-      margin: 20px 0;
-      font-style: italic;
       color: #666;
     }
-
     .contact-punchlines p {
       margin: 8px 0;
     }
-
+    .home-button {
+      display: inline-block;
+      margin-top: 15px;
+    .contact-punchlines p {
+      margin: 8px 0;
+    }
+    .feedback-card {
+      width: min(440px, calc(100% - 32px));
+      margin: 22px auto 10px;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid #f3c3d8;
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: 0 8px 22px rgba(214, 51, 132, 0.12);
+    }
+    .feedback-card h2 {
+      color: #5a2a55;
+      font-family: 'Playfair Display', serif;
+      font-size: 21px;
+      margin: 0 0 12px;
+    }
+    .feedback-card textarea {
+      width: 100%;
+      min-height: 88px;
+      resize: vertical;
+      box-sizing: border-box;
+      border: 1px solid #efb8d0;
+      border-radius: 10px;
+      padding: 11px;
+      font-family: 'Roboto', sans-serif;
+      font-size: 15px;
+      outline: none;
+      background: #fff;
+    }
+    .feedback-card textarea:focus {
+      border-color: #d63384;
+      box-shadow: 0 0 0 3px rgba(214, 51, 132, 0.12);
+    }
+    .feedback-card button {
+      margin-top: 12px;
+      background: #d63384;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 24px;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+    .feedback-card button:hover {
+      background: #b1256b;
+      transform: translateY(-2px);
+    }
+    .alert {
+      width: min(440px, calc(100% - 32px));
+      margin: 14px auto 0;
+      border-radius: 10px;
+      padding: 11px 14px;
+      font-weight: 500;
+    }
+    .alert-success {
+      background: #eaf7ef;
+      border: 1px solid #bfe7cd;
+      color: #176b3a;
+    }
+    .alert-error {
+      background: #fff0f0;
+      border: 1px solid #ffc9cf;
+      color: #b4232f;
+    }
     .home-button {
       display: inline-block;
       margin-top: 15px;
     }
-
     /* Responsive adjustments */
-      @media screen and (max-width: 600px) {
-        h1 {
-          font-size: 32px;
-        }
-      }
-
-      /* 🎭 Heading Reveal Animation */
-      .reveal-text span {
-        display: inline-block;
-        opacity: 0;
-        transform: translateY(10px);
-        animation: revealLetter 0.05s forwards;
-      }
-
-      @keyframes revealLetter {
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-    </style>
-</head>
-<body>
-
-  <!-- 🌸 Navbar -->
-    <nav>
-      <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/booknow">Book Now</a></li>
-        <li><a href="/services">Services</a></li>
-        <li><a href="/beautyproducts">Beauty Products</a></li>
-        <li><a href="/contact">Contact</a></li>
-      </ul>
-      <div class="nav-right" style="display: flex; gap: 20px; align-items: center;">
-          <div class="nav-icons">
-              <% if (locals.user) { %>
-              <div class="nav-icon-wrapper" onclick="location.href='/wishlist'">
-                  <i class="fas fa-heart" style="color:#d63384; font-size:1.2em;"></i>
-                  <div class="tooltip">My Wishlist</div>
-              </div>
-              <div class="nav-icon-wrapper" onclick="location.href='/mycart'">
-                  <i class="fas fa-shopping-cart" style="color:#333; font-size:1.2em;"></i>
-                  <div class="tooltip">My Cart</div>
-              </div>
-              <div class="nav-icon-wrapper" onclick="location.href='/profile'">
-                <div class="nav-avatar">
-                  <% if (user.photo) { %>
-                    <img src="<%= user.photo %>" alt="Profile">
-                  <% } else { %>
-                    <%= user.name ? user.name.charAt(0).toUpperCase() : user.email.charAt(0).toUpperCase() %>
-                  <% } %>
-                </div>
-                <div class="tooltip">My Profile</div>
-              </div>
-              <% } else { %>
-                  <a class="login" href="/login">Login</a> / 
-                  <a class="login" href="/signup">Sign Up</a>
-              <% } %>
-          </div>
-      </div>
-    </nav>
-
-
   <main>
     <h1 class="reveal-text" id="contactHeading">Welcome to Kristen's Glam Hub</h1>
     <p>Your one-stop destination for all things beauty ✨</p>
   </main>
-
+    <% const successMessages = Array.isArray(success_msg) ? success_msg : (success_msg ? [success_msg] : []); %>
+    <% const errorMessages = Array.isArray(error_msg) ? error_msg : (error_msg ? [error_msg] : []); %>
+    <% if (successMessages.length) { %>
+      <div class="alert alert-success"><%= successMessages[0] %></div>
+    <% } %>
+    <% if (errorMessages.length) { %>
+      <div class="alert alert-error"><%= errorMessages[0] %></div>
+    <% } %>
+    <form class="feedback-card" action="/feedback" method="POST">
+      <h2>Your valueable feedback matter for us</h2>
+      <textarea name="feedback" placeholder="Share your thoughts..." required></textarea>
+      <button type="submit">Send</button>
+    </form>
+  </main>
   <footer>
     <p><strong>Contact us:</strong> <a href="mailto:info@beautywebsite.com">info@beautywebsite.com</a></p>
-
-    <div class="contact-punchlines">
-      <p>💄 Let your beauty shine — we're just one message away!</p>
-      <p>📞 Get glammed up. Get noticed. Get in touch!</p>
-      <p>🖤 Your beauty journey starts here!</p>
-    </div>
-
-    <div class="social-icons">
-      <a href="https://www.instagram.com/kasshhiiisshhh" target="_blank"><i class="fab fa-instagram"></i></a>
-      <a href="https://www.facebook.com/beautywebsite" target="_blank"><i class="fab fa-facebook-f"></i></a>
-      <a href="https://wa.me/+918349439349" target="_blank"><i class="fab fa-whatsapp"></i></a>
-      <a href="https://www.snapchat.com/add/kash_ishhhsshs" target="_blank"><i class="fab fa-snapchat-ghost"></i></a>
-    </div>
-
-    <p>© 2025 Kristen's Glam Hub. All rights reserved.</p>
-  </footer>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const heading = document.getElementById("contactHeading");
-      if (heading) {
-        const text = heading.textContent;
-        heading.innerHTML = "";
-        [...text].forEach((char, i) => {
-          const span = document.createElement("span");
-          span.textContent = char === " " ? "\u00A0" : char;
-          span.style.animationDelay = `${i * 0.03}s`; // Quick effect
-          heading.appendChild(span);
-        });
-      }
-    });
-  </script>
-</body>
-</html>
