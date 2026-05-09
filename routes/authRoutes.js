@@ -17,4 +17,12 @@ router.post("/signup/resend-otp", authController.resendSignupOTP);
 
 router.get('/logout', authController.logout);
 
+router.get("/forgot-password", authController.showForgotPassword);
+
+router.post("/forgot-password", authController.sendResetLink);
+
+router.get("/reset-password/:token", authController.showResetPassword);
+
+router.post("/reset-password/:token", authController.resetPassword);
+
 module.exports = router;
