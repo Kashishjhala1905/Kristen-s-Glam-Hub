@@ -6,6 +6,7 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
 const fs = require("fs");
+const nodemailer = require("nodemailer");
 
 const Appointment = require("./models/Appointment");
 const User = require("./models/User");
