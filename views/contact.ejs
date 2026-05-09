@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kristen's Glam Hub</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.png">
+
+<link rel="apple-touch-icon" href="/images/logo.png">
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -163,6 +166,80 @@
       margin: 8px 0;
     }
 
+    .feedback-card {
+      width: min(440px, calc(100% - 32px));
+      margin: 22px auto 10px;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid #f3c3d8;
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: 0 8px 22px rgba(214, 51, 132, 0.12);
+    }
+
+    .feedback-card h2 {
+      color: #5a2a55;
+      font-family: 'Playfair Display', serif;
+      font-size: 21px;
+      margin: 0 0 12px;
+    }
+
+    .feedback-card textarea {
+      width: 100%;
+      min-height: 88px;
+      resize: vertical;
+      box-sizing: border-box;
+      border: 1px solid #efb8d0;
+      border-radius: 10px;
+      padding: 11px;
+      font-family: 'Roboto', sans-serif;
+      font-size: 15px;
+      outline: none;
+      background: #fff;
+    }
+
+    .feedback-card textarea:focus {
+      border-color: #d63384;
+      box-shadow: 0 0 0 3px rgba(214, 51, 132, 0.12);
+    }
+
+    .feedback-card button {
+      margin-top: 12px;
+      background: #d63384;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 24px;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .feedback-card button:hover {
+      background: #b1256b;
+      transform: translateY(-2px);
+    }
+
+    .alert {
+      width: min(440px, calc(100% - 32px));
+      margin: 14px auto 0;
+      border-radius: 10px;
+      padding: 11px 14px;
+      font-weight: 500;
+    }
+
+    .alert-success {
+      background: #eaf7ef;
+      border: 1px solid #bfe7cd;
+      color: #176b3a;
+    }
+
+    .alert-error {
+      background: #fff0f0;
+      border: 1px solid #ffc9cf;
+      color: #b4232f;
+    }
+
     .home-button {
       display: inline-block;
       margin-top: 15px;
@@ -235,6 +312,22 @@
   <main>
     <h1 class="reveal-text" id="contactHeading">Welcome to Kristen's Glam Hub</h1>
     <p>Your one-stop destination for all things beauty ✨</p>
+    <% const contactSuccess = locals.success_msg || ""; %>
+    <% const contactError = locals.error_msg || ""; %>
+    <% const successMessages = Array.isArray(contactSuccess) ? contactSuccess : (contactSuccess ? [contactSuccess] : []); %>
+    <% const errorMessages = Array.isArray(contactError) ? contactError : (contactError ? [contactError] : []); %>
+    <% if (successMessages.length) { %>
+      <div class="alert alert-success"><%= successMessages[0] %></div>
+    <% } %>
+    <% if (errorMessages.length) { %>
+      <div class="alert alert-error"><%= errorMessages[0] %></div>
+    <% } %>
+
+    <form class="feedback-card" action="/feedback" method="POST">
+      <h2>Your valueable feedback matter for us</h2>
+      <textarea name="feedback" placeholder="Share your thoughts..." required></textarea>
+      <button type="submit">Send</button>
+    </form>
   </main>
 
   <footer>

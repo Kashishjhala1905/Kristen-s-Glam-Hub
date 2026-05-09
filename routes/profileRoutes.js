@@ -4,23 +4,9 @@ const Appointment = require("../models/Appointment");
 const User = require("../models/User");
 const requireLogin = require("../middlewares/authMiddleware");
 const multer = require("multer");
-const path = require("path");
-const fs = require("fs");
-
-// Configure Multer for photo uploads
-const uploadDir = path.join(__dirname, "..", "public", "uploads");
-fs.mkdirSync(uploadDir, { recursive: true });
-
-const storage = multer.diskStorage({
-  destination: uploadDir,
-  filename: function (req, file, cb) {
-    const ext = path.extname(file.originalname).toLowerCase();
-    cb(null, "user-" + req.session.user._id + "-" + Date.now() + ext);
-  }
-});
 
 const upload = multer({
-    storage,
+    storage: multer.memoryStorage(),
     limits: { fileSize: 2 * 1024 * 1024 },
     fileFilter: (req, file, cb) => {
         if (!file.mimetype.startsWith("image/")) {
@@ -69,7 +55,7 @@ async function updateProfile(req, res) {
         let updateData = { name, email, contact };
         
         if (req.file) {
-            updateData.photo = "/uploads/" + req.file.filename;
+            updateData.photo = `data:${req.file.mimetype};base64,${req.file.buffer.toString("base64")}`;
         }
 
         const updatedUser = await User.findByIdAndUpdate(userId, updateData, {

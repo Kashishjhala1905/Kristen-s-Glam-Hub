@@ -11,6 +11,7 @@ const Appointment = require("./models/Appointment");
 const User = require("./models/User");
 
 const app = express();
+
 // ROUTES
 const authRoutes = require("./routes/authRoutes");
 const profileRoutes = require("./routes/profileRoutes");
@@ -19,6 +20,7 @@ const cartRoutes = require("./routes/cartRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const addressRoutes = require("./routes/addressRoutes");
 const wishlistRoutes = require("./routes/wishlistRoutes");
+const contactRoutes = require("./routes/contactRoutes");
 
 // ================= BASIC SETUP =================
 app.set("view engine", "ejs");
@@ -90,7 +92,6 @@ app.get("/", (req, res) => {
 });
 
 app.get("/services", (req, res) => res.render("services"));
-app.get("/contact", (req, res) => res.render("contact"));
 app.get("/consultation", (req, res) => res.render("consultation"));
 
 app.get("/booknow", (req, res) => {
@@ -196,7 +197,7 @@ app.use("/", cartRoutes);
 app.use("/", orderRoutes);
 app.use("/", addressRoutes);
 app.use("/", wishlistRoutes);
-
+app.use("/", contactRoutes);
 
 // ERROR HANDLER
 app.use((err, req, res, next) => {
