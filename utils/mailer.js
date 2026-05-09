@@ -122,4 +122,8 @@ module.exports = {
   transporter,
   sendOTP,
   sendResetPasswordMail,
+<<<<<<< HEAD
 };
+=======
+};
+>>>>>>> 2382cff23145de8f6e596c03b9800ab760b84f04
