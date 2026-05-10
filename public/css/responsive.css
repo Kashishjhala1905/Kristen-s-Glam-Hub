@@ -89,7 +89,7 @@ button {
   }
 
   body {
-    padding-top: 65px; /* Offset for the fixed top bar */
+    padding-top: 65px !important; /* Offset for the fixed top bar */
   }
 
   .mobile-nav-overlay {
