@@ -119,11 +119,11 @@ button {
   }
 
   /* Override nav when it acts as side panel */
-  nav, .right {
+  nav, .right, .side-panel {
     display: none; /* Hide default nav before JS activates */
   }
 
-  nav.mobile-side-nav, .right.mobile-side-nav {
+  nav.mobile-side-nav, .right.mobile-side-nav, .side-panel.mobile-side-nav {
     display: flex !important;
     position: fixed !important;
     top: 0 !important;
@@ -143,12 +143,13 @@ button {
     gap: 15px !important;
   }
 
-  nav.mobile-side-nav.active, .right.mobile-side-nav.active {
+  nav.mobile-side-nav.active, .right.mobile-side-nav.active, .side-panel.mobile-side-nav.active {
     right: 0 !important;
   }
 
   nav.mobile-side-nav ul, 
-  nav.mobile-side-nav .nav-icons {
+  nav.mobile-side-nav .nav-icons,
+  .side-panel.mobile-side-nav .nav-icons {
     flex-direction: column !important;
     width: 100% !important;
     display: flex !important;
@@ -157,7 +158,8 @@ button {
 
   nav.mobile-side-nav ul li a,
   nav.mobile-side-nav a.login,
-  .right.mobile-side-nav .nav-item a {
+  .right.mobile-side-nav .nav-item a,
+  .side-panel.mobile-side-nav .side-link {
     display: block;
     width: 100%;
     padding: 12px 15px;
@@ -168,6 +170,7 @@ button {
     font-weight: 500;
     color: #5a2a55;
     border: none;
+    justify-content: flex-start;
   }
 
   nav.mobile-side-nav ul li a:hover,

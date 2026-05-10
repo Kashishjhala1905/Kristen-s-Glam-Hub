@@ -4,6 +4,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!nav) {
         nav = document.querySelector(".right"); // for index.ejs
     }
+    if (!nav) {
+        nav = document.querySelector(".side-panel"); // for profile.ejs
+    }
 
     if (!nav) return;
 

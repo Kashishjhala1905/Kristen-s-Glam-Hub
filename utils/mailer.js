@@ -124,7 +124,3 @@ module.exports = {
   sendResetPasswordMail,
 
 };
-<<<<<<< HEAD
-=======
-
->>>>>>> 2cf2691 (Added login functionality)
