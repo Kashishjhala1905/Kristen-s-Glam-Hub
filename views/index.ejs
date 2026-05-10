@@ -15,8 +15,8 @@
 
     body {
       font-family: "Roboto", sans-serif;
-      overflow: hidden;
-      height: 100vh;
+      overflow-x: hidden;
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -159,8 +159,62 @@
       transform: translateX(-50%) translateY(0);
     }
 
+    @media (max-width: 760px) {
+      body {
+        align-items: flex-start;
+        min-height: 100vh;
+        overflow-y: auto;
+      }
+
+      .container {
+        min-height: 100vh;
+        height: auto;
+        grid-template-columns: 1fr;
+        gap: 28px;
+        padding: 42px 20px;
+        text-align: center;
+      }
+
+      .left {
+        max-width: 100%;
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 2.7rem;
+        line-height: 1.1;
+      }
+
+      .left h2 {
+        font-size: 1.55rem;
+      }
+
+      .left p {
+        font-size: 1rem;
+      }
+
+      .right {
+        align-items: stretch;
+        width: 100%;
+        gap: 10px;
+      }
+
+      .nav-item {
+        font-size: 1.05rem;
+      }
+
+      .nav-item a {
+        display: block;
+        padding: 11px 12px;
+        border: 1px solid rgba(255, 214, 232, 0.45);
+        border-radius: 8px;
+        background: rgba(0, 0, 0, 0.22);
+      }
+    }
+
   </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/responsive.css">
 </head>
 
 <body>
@@ -177,6 +231,7 @@
     </div>
 
     <div class="right">
+      <div class="nav-logo" onclick="location.href='/'" style="cursor:pointer; display:flex; align-items:center; margin-right: 15px;"><img src="/images/logo.png" alt="Glam Hub Logo" style="height: 45px; width: auto; border-radius: 50%; border: 2px solid #d63384; padding: 2px;" /></div>
       <div class="nav-item"><a href="/">Home</a></div>
       <div class="nav-item"><a href="/services">Services</a></div>
       <div class="nav-item"><a href="/beautyproducts">Beauty Products</a></div>
@@ -218,5 +273,6 @@
   <% } %>
 </script>
 
+<script src="/js/mobile-nav.js"></script>
 </body>
 </html>

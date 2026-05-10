@@ -33,6 +33,11 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    * {
+      box-sizing: border-box;
     }
 
     /* 🌸 Navbar (same as services.ejs) */
@@ -46,11 +51,13 @@
       position: sticky;
       top: 0;
       z-index: 100;
+      width: 100%;
     }
 
     nav ul {
       list-style: none;
       display: flex;
+      flex-wrap: wrap;
       gap: 25px;
       margin: 0;
       padding: 0;
@@ -105,6 +112,7 @@
     main {
       flex: 1;
       padding: 20px;
+      width: 100%;
     }
 
     h1 {
@@ -124,6 +132,7 @@
       padding: 20px;
       border-top: 3px solid #d63384;
       box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.05);
+      width: 100%;
     }
 
     footer a {
@@ -246,9 +255,97 @@
     }
 
     /* Responsive adjustments */
-      @media screen and (max-width: 600px) {
+      @media screen and (max-width: 760px) {
+        nav {
+          position: static;
+          flex-direction: column;
+          align-items: stretch;
+          gap: 12px;
+          padding: 12px 14px;
+        }
+
+        nav ul {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 8px;
+          width: 100%;
+        }
+
+        nav ul li a,
+        .login {
+          display: block;
+          width: 100%;
+          padding: 9px 8px;
+          border-radius: 8px;
+          background: #fff8fb;
+          font-size: 14px;
+          text-align: center;
+        }
+
+        .nav-right {
+          width: 100%;
+          justify-content: center;
+        }
+
+        .nav-icons {
+          justify-content: center;
+          flex-wrap: wrap;
+          gap: 14px;
+          width: 100%;
+        }
+
+        main {
+          padding: 18px 12px;
+        }
+
         h1 {
           font-size: 32px;
+          line-height: 1.25;
+          margin: 22px auto 8px;
+          max-width: 340px;
+        }
+
+        p {
+          font-size: 16px;
+          line-height: 1.45;
+        }
+
+        .feedback-card {
+          width: 100%;
+          margin: 18px auto 6px;
+          padding: 15px;
+          border-radius: 12px;
+        }
+
+        .feedback-card h2 {
+          font-size: 19px;
+          line-height: 1.3;
+        }
+
+        .feedback-card textarea {
+          min-height: 104px;
+        }
+
+        .feedback-card button {
+          width: 100%;
+        }
+
+        .alert {
+          width: 100%;
+          margin-top: 12px;
+        }
+
+        footer {
+          padding: 18px 12px;
+        }
+
+        .contact-punchlines p {
+          font-size: 15px;
+        }
+
+        .social-icons {
+          gap: 18px;
+          font-size: 24px;
         }
       }
 
@@ -267,11 +364,13 @@
         }
       }
     </style>
+  <link rel="stylesheet" href="/css/responsive.css">
 </head>
 <body>
 
   <!-- 🌸 Navbar -->
     <nav>
+      <div class="nav-logo" onclick="location.href='/'" style="cursor:pointer; display:flex; align-items:center; margin-right: 15px;"><img src="/images/logo.png" alt="Glam Hub Logo" style="height: 45px; width: auto; border-radius: 50%; border: 2px solid #d63384; padding: 2px;" /></div>
       <ul>
         <li><a href="/">Home</a></li>
         <li><a href="/booknow">Book Now</a></li>
@@ -363,5 +462,6 @@
       }
     });
   </script>
+<script src="/js/mobile-nav.js"></script>
 </body>
 </html>

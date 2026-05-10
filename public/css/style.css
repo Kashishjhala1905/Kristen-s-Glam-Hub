@@ -9,7 +9,7 @@ body {
   height: 100%;
   width: 100%;
   font-family: "Playfair Display", serif;
-  overflow: hidden; /* disables all scrolling */
+  overflow-x: hidden;
 }
 
 /* Fullscreen background */
@@ -76,8 +76,8 @@ body {
   }
 }
 .promo-box{
-  height: 150px;
-  width: 700px;
+  min-height: 150px;
+  width: min(700px, calc(100vw - 32px));
   text-align: center;
   position: relative;
   margin-top: 30px;
@@ -112,4 +112,25 @@ h2 {
 .booknow:hover {
   background-color: grey;
   color: black;
+}
+
+@media (max-width: 760px) {
+  .overlay {
+    padding: 24px 16px;
+  }
+
+  .slide-up-down {
+    font-size: 42px;
+    white-space: normal;
+    line-height: 1.15;
+  }
+
+  h2 {
+    font-size: 32px;
+    text-align: center;
+  }
+
+  p {
+    font-size: 18px;
+  }
 }

@@ -2,12 +2,13 @@
 <html>
 <head>
   <title>Select Address</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.png">
 
 <link rel="apple-touch-icon" href="/images/logo.png">
   <style>
     body { font-family: Arial; background:#f5f5f5; margin:0; }
-    .container { width:60%; margin:40px auto; background:#fff; padding:30px; }
+    .container { width:min(92%, 720px); margin:40px auto; background:#fff; padding:30px; border-radius:12px; }
     h2 { margin-bottom:20px; }
     input { width:100%; padding:12px; margin-bottom:15px; }
     button {
@@ -19,7 +20,15 @@
       font-size:16px;
       cursor:pointer;
     }
+
+    @media (max-width: 480px) {
+      .container {
+        margin: 18px auto;
+        padding: 20px 16px;
+      }
+    }
   </style>
+  <link rel="stylesheet" href="/css/responsive.css">
 </head>
 
 <body>
@@ -39,5 +48,6 @@
   </form>
 </div>
 
+<script src="/js/mobile-nav.js"></script>
 </body>
 </html>

@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up | Kristen’s Glam Hub</title>
     <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.png">
 
@@ -12,12 +13,13 @@
     <style>
         body {
             margin: 0;
-            height: 100vh;
+            min-height: 100vh;
             background: linear-gradient(135deg, #ffd6e8, #ffe4ef);
             display: flex;
             justify-content: center;
             align-items: center;
             font-family: 'Roboto', sans-serif;
+            padding: 18px;
         }
 
         .box {
@@ -74,7 +76,23 @@
             color: #d63384;
             font-weight: bold;
         }
+
+        @media (max-width: 480px) {
+            .box {
+                width: 100%;
+                padding: 24px 18px;
+            }
+
+            h1 {
+                font-size: 34px;
+            }
+
+            input {
+                width: 100%;
+            }
+        }
     </style>
+  <link rel="stylesheet" href="/css/responsive.css">
 </head>
 
 <body>
@@ -102,5 +120,6 @@
     </p>
 </div>
 
+<script src="/js/mobile-nav.js"></script>
 </body>
 </html>

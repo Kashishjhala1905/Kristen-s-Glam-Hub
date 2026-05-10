@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Beauty Products | Kristen’s Glam Hub</title>
     <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.png">
 
@@ -9,6 +10,7 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Roboto:wght@400;500&family=Edu+AU+VIC+WA+NT+Arrows:wght@400..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/responsive.css">
 
     <style>
         body {
@@ -154,11 +156,32 @@
             text-align: center;
             transition: all 0.3s ease;
         }
+        position: relative;
 
         .product-card:hover {
             transform: translateY(-6px);
             box-shadow: 0 8px 18px rgba(0,0,0,0.20);
         }
+
+        .wishlist-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: white;
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: 0.3s;
+            z-index: 5;
+        }
+        .wishlist-btn i { color: #ccc; transition: 0.3s; }
+        .wishlist-btn.active i { color: #dc3545; }
 
         .product-card img {
             width: 100%;
@@ -268,6 +291,7 @@
 <body>
 
     <nav>
+      <div class="nav-logo" onclick="location.href='/'" style="cursor:pointer; display:flex; align-items:center; margin-right: 15px;"><img src="/images/logo.png" alt="Glam Hub Logo" style="height: 45px; width: auto; border-radius: 50%; border: 2px solid #d63384; padding: 2px;" /></div>
         <ul>
             <li><a href="/">Home</a></li>
             <li><a href="/booknow">Book Now</a></li>
@@ -319,6 +343,9 @@
         <div class="product-list">
             <% categories[section].forEach(product => { %>
             <div class="product-card">
+                <button class="wishlist-btn" type="button" onclick="addToWishlist('<%= product.product_name.replace(/'/g, "\\'") %>', '<%= product.price %>', '<%= product.image_url %>', this)">
+                    <i class="fas fa-heart"></i>
+                </button>
                 <img src="<%= product.image_url %>" alt="<%= product.product_name %>"
                      onerror="this.src='/images/placeholder.jpg'">
                 <div class="product-info">
@@ -365,6 +392,21 @@
         .then(() => showToast(`"${name}" added to cart 💖`));
     }
 
+    function addToWishlist(name, price, image, btn) {
+        const numericPrice = price.replace(/[^0-9.]/g, "");
+        fetch("/wishlist/add", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, price: numericPrice, image })
+        })
+        .then(res => {
+            if (res.ok) {
+                btn.classList.add("active");
+                showToast(`"${name}" added to wishlist 💖`);
+            }
+        });
+    }
+
     document.addEventListener("DOMContentLoaded", () => {
       const heading = document.getElementById("beautyHeading");
       if (heading) {
@@ -379,5 +421,6 @@
       }
     });
 </script>
+<script src="/js/mobile-nav.js"></script>
 </body>
 </html>

@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Payment</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.png">
 
 <link rel="apple-touch-icon" href="/images/logo.png">
@@ -48,7 +49,18 @@
     button:hover{
       background-color: #e36fa9;
     }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 14px;
+      }
+
+      .box {
+        padding: 18px;
+      }
+    }
   </style>
+  <link rel="stylesheet" href="/css/responsive.css">
 </head>
 
 <body>
@@ -84,5 +96,6 @@
   <button>Pay Now</button>
 </div>
 
+<script src="/js/mobile-nav.js"></script>
 </body>
 </html>
