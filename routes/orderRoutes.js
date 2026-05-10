@@ -86,6 +86,29 @@ router.get("/payment", isLoggedIn, async (req, res) => {
     return sum + item.price * (item.qty || 1);
   }, 0);
 
+  res.render("payment", {
+    user: req.session.user,
+    cart,
+    address: req.session.address,
+    paymentMode: req.session.paymentMode,
+    total
+  });
+});
+
+/* =========================
+   PAY NOW PAGE
+========================= */
+router.get("/paynow", isLoggedIn, async (req, res) => {
+  if (!req.session.address || !req.session.paymentMode) {
+    return res.redirect("/place-order");
+  }
+
+  const cart = await CartItem.find({ userId: req.session.user._id });
+
+  const total = cart.reduce((sum, item) => {
+    return sum + item.price * (item.qty || 1);
+  }, 0);
+
   res.render("paynow", {
     user: req.session.user,
     cart,
