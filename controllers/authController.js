@@ -197,9 +197,13 @@ exports.sendLoginOTP = async (req, res) => {
 
     const otp = generateOTP();
 
-    user.loginOTP = otp;
-    user.otpExpiry = Date.now() + 60 * 1000; // 1 minute
-    await user.save();
+    await User.updateOne(
+      { _id: user._id },
+      {
+        loginOTP: otp,
+        otpExpiry: Date.now() + 60 * 1000, // 1 minute
+      }
+    );
 
     await sendOTP(user.email, otp);
 
@@ -239,9 +243,15 @@ exports.verifyLoginOTP = async (req, res) => {
     }
 
     // ✅ OTP VERIFIED → FINAL LOGIN
-    user.loginOTP = null;
-    user.otpExpiry = null;
-    await user.save();
+    await User.updateOne(
+      { _id: user._id },
+      {
+        $unset: {
+          loginOTP: "",
+          otpExpiry: "",
+        },
+      }
+    );
 
     req.session.user = {
       _id: user._id,
@@ -400,13 +410,14 @@ exports.sendResetLink = async (req, res) => {
       .randomBytes(32)
       .toString("hex");
 
-    // ✅ SAVE TOKEN + EXPIRY
-    user.resetPasswordToken = token;
-
-    user.resetPasswordExpiry =
-      Date.now() + 15 * 60 * 1000;
-
-    await user.save();
+    // ✅ SAVE TOKEN + EXPIRY without triggering full document validation
+    await User.updateOne(
+      { _id: user._id },
+      {
+        resetPasswordToken: token,
+        resetPasswordExpiry: Date.now() + 15 * 60 * 1000,
+      }
+    );
 
     // ✅ CREATE RESET LINK
     const resetLink =
@@ -473,12 +484,16 @@ exports.resetPassword = async (req, res) => {
     const hashedPassword =
       await bcrypt.hash(password, 10);
 
-    user.password = hashedPassword;
-
-    user.resetPasswordToken = undefined;
-    user.resetPasswordExpiry = undefined;
-
-    await user.save();
+    await User.updateOne(
+      { _id: user._id },
+      {
+        $set: { password: hashedPassword },
+        $unset: {
+          resetPasswordToken: "",
+          resetPasswordExpiry: "",
+        },
+      }
+    );
 
     req.flash(
       "success_msg",
